@@ -1,13 +1,32 @@
 import type { Movie } from "../../types/movie.ts";
+import type { MovieCategory } from "../../types/movieCategory.ts";
 import MovieCard from "../MovieCard/MovieCard.tsx";
+import Pagination from "../Pagination/Pagination.tsx";
+import Spinner from "../Spinner/Spinner.tsx";
 import styles from "./MovieList.module.css";
 
 // Define the props this component expects
 interface MovieListProps {
   movies: Movie[];
+  category: MovieCategory;
+  currentPage: number;
+  totalPages: number;
+  onPageChange: (page: number) => void;
+  isLoading?: boolean;
 }
 
-const MovieList = ({ movies }: MovieListProps) => {
+const MovieList = ({
+  movies,
+  category,
+  currentPage,
+  totalPages,
+  onPageChange,
+  isLoading = false,
+}: MovieListProps) => {
+  if (isLoading) {
+    return <Spinner />;
+  }
+
   if (movies.length === 0) {
     return (
       <div className={styles.noMovies}>
@@ -18,16 +37,30 @@ const MovieList = ({ movies }: MovieListProps) => {
   }
 
   return (
-    <section className={styles.movieListContainer}>
-      <div className={styles.movieList}>
-        <h2 className={styles.movieListHeading}>Popular Movies</h2>
+    <div className={styles.movieListContainer}>
+      <section className={styles.movieList}>
+        <h2 className={styles.movieListHeading}>
+          {category === "search"
+            ? "Search Results"
+            : `${
+                category.charAt(0).toUpperCase() +
+                category.slice(1).replace("_", " ")
+              } Movies`}
+        </h2>
         <div className={styles.movieListGrid}>
           {movies.map((movie) => (
             <MovieCard key={movie.id} movie={movie} />
           ))}
         </div>
-      </div>
-    </section>
+        {totalPages > 1 && (
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={onPageChange}
+          />
+        )}
+      </section>
+    </div>
   );
 };
 

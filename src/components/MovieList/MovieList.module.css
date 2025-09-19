@@ -8,6 +8,7 @@
 .movieListHeading {
   color: var(--moderate-violet);
   margin-bottom: 20px;
+  text-transform: capitalize;
 }
 
 .movieListGrid {
