@@ -43,6 +43,54 @@ export const tmdbApiService = {
     return response.data;
   },
 
+  // Function to get now playing movies
+  async getNowPlayingMovies(page: number = 1): Promise<MoviesResponse> {
+    const cacheKey = `now_playing_${page}`;
+    if (cache[cacheKey]) {
+      console.log("Cache hit for:", cacheKey);
+      return cache[cacheKey];
+    }
+    console.log("Cache miss, fetching from API:", cacheKey);
+    const response: AxiosResponse<MoviesResponse> = await tmdbApiClient.get(
+      "movie/now_playing",
+      { params: { page } }
+    );
+    cache[cacheKey] = response.data;
+    return response.data;
+  },
+
+  // Function to get top rated movies
+  async getTopRatedMovies(page: number = 1): Promise<MoviesResponse> {
+    const cacheKey = `top_rated_${page}`;
+    if (cache[cacheKey]) {
+      console.log("Cache hit for:", cacheKey);
+      return cache[cacheKey];
+    }
+    console.log("Cache miss, fetching from API:", cacheKey);
+    const response: AxiosResponse<MoviesResponse> = await tmdbApiClient.get(
+      "movie/top_rated",
+      { params: { page } }
+    );
+    cache[cacheKey] = response.data;
+    return response.data;
+  },
+
+  // Function to get upcoming movies
+  async getUpcomingMovies(page: number = 1): Promise<MoviesResponse> {
+    const cacheKey = `upcoming_${page}`;
+    if (cache[cacheKey]) {
+      console.log("Cache hit for:", cacheKey);
+      return cache[cacheKey];
+    }
+    console.log("Cache miss, fetching from API:", cacheKey);
+    const response: AxiosResponse<MoviesResponse> = await tmdbApiClient.get(
+      "movie/upcoming",
+      { params: { page } }
+    );
+    cache[cacheKey] = response.data;
+    return response.data;
+  },
+
   // Function to search movies (to implement this in full later)
   async searchMovies(query: string, page: number = 1): Promise<MoviesResponse> {
     const cacheKey = `search_${query}_${page}`;
