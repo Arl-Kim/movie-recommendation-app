@@ -1,0 +1,9 @@
+.recommendationsContainer {
+  padding: 20px;
+  min-height: calc(100vh - 200px);
+}
+
+.error {
+  color: #ff0000;
+  text-align: center;
+}
