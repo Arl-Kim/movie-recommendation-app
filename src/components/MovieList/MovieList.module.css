@@ -1,0 +1,28 @@
+.movieListContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding: 20px;
+}
+
+.movieListHeading {
+  color: var(--moderate-violet);
+  margin-bottom: 20px;
+}
+
+.movieListGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.noMovies {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.noMovies i {
+  font-size: 3em;
+}

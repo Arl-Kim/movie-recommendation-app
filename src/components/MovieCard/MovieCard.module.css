@@ -1,0 +1,67 @@
+.movieCard {
+  background: var(--strong-yellow-green);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 400ms ease-in-out;
+}
+
+.movieCard:hover {
+  background: var(--dark-violet);
+  transform: scale(1.02);
+  cursor: pointer;
+}
+
+.movieImage {
+  max-height: 400px;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.movieInfo {
+  padding: 10px;
+}
+
+.movieTitle {
+  transition: all 400ms ease-in-out;
+}
+
+.movieCard:hover .movieTitle {
+  color: var(--strong-yellow-green);
+}
+
+.movieRating,
+.movieOverview {
+  color: var(--moderate-violet);
+}
+
+.movieRating {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.movieOverview {
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Limits text to 3 lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.movieReleaseDate {
+  font-size: 0.875em;
+  font-weight: 600;
+}
+
+.movieCard:hover .movieReleaseDate {
+  color: var(--strong-yellow-green);
+}
+
+/* RESPONSIVE */
+@media (max-width: 520px) {
+  .movieImage {
+    max-width: 100%;
+    max-height: 100%;
+  }
+}

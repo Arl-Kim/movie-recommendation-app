@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { tmdbApiService } from "./services/tmdbApiClient";
-import type { MoviesResponse } from "./types/movie";
+import { tmdbApiService } from "./services/tmdbApiClient.ts";
+import type { Movie } from "./types/movie.ts";
 import "./App.css";
-import Spinner from "./components/Spinner/Spinner";
+import Spinner from "./components/Spinner/Spinner.tsx";
+import MovieList from "./components/MovieList/MovieList.tsx";
 
 const App = () => {
-  const [movies, setMovies] = useState<MoviesResponse | null>(null);
+  const [movies, setMovies] = useState<Movie[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -15,7 +16,8 @@ const App = () => {
         setIsLoading(true);
         setError(null);
         const data = await tmdbApiService.getPopularMovies(1);
-        setMovies(data);
+        // Store just the array of movies in state
+        setMovies(data.results);
       } catch (err) {
         console.error("Failed to fetch movies:", err);
         setError("Oops! Could not load movies. Please try again later.");
@@ -37,8 +39,12 @@ const App = () => {
 
   return (
     <div className="app">
-      <h1>Popular Movies</h1>
-      <pre>{JSON.stringify(movies, null, 2)}</pre>
+      <header className="header">
+        <h1>Recommendations</h1>
+      </header>
+      <main className="main-content">
+        <MovieList movies={movies} />
+      </main>
     </div>
   );
 };
