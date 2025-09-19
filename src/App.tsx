@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { tmdbApiService } from "./services/tmdbApiClient";
 import type { MoviesResponse } from "./types/movie";
 import "./App.css";
+import Spinner from "./components/Spinner/Spinner";
 
 const App = () => {
   const [movies, setMovies] = useState<MoviesResponse | null>(null);
@@ -27,7 +28,7 @@ const App = () => {
   }, []);
 
   if (isLoading) {
-    return <div>Loading initial data...</div>;
+    return <Spinner />;
   }
 
   if (error) {

@@ -126,9 +126,11 @@ button:focus-visible {
     color: #213547;
     background-color: #ffffff;
   }
+
   a:hover {
     color: var(--dark-violet);
   }
+
   button {
     background-color: var(--dark-violet);
     color: var(--strong-yellow-green);
