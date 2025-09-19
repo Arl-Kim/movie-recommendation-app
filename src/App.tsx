@@ -1,35 +1,45 @@
-import { useState } from "react";
-import reactLogo from "/assets/react.svg";
-import viteLogo from "/assets/vite.svg";
+import { useEffect, useState } from "react";
+import { tmdbApiService } from "./services/tmdbApiClient";
+import type { MoviesResponse } from "./types/movie";
 import "./App.css";
 
-function App() {
-  const [count, setCount] = useState(0);
+const App = () => {
+  const [movies, setMovies] = useState<MoviesResponse | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setIsLoading(true);
+        setError(null);
+        const data = await tmdbApiService.getPopularMovies(1);
+        setMovies(data);
+      } catch (err) {
+        console.error("Failed to fetch movies:", err);
+        setError("Oops! Could not load movies. Please try again later.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (isLoading) {
+    return <div>Loading initial data...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Movie Recommendation App: Vite + TypeScript + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div className="app">
+      <h1>Popular Movies</h1>
+      <pre>{JSON.stringify(movies, null, 2)}</pre>
+    </div>
   );
-}
+};
 
 export default App;
