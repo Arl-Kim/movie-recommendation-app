@@ -11,6 +11,7 @@ interface MovieListProps {
   category: MovieCategory;
   currentPage: number;
   totalPages: number;
+  totalResults?: number;
   onPageChange: (page: number) => void;
   isLoading?: boolean;
 }
@@ -20,6 +21,7 @@ const MovieList = ({
   category,
   currentPage,
   totalPages,
+  totalResults,
   onPageChange,
   isLoading = false,
 }: MovieListProps) => {
@@ -39,14 +41,14 @@ const MovieList = ({
   return (
     <div className={styles.movieListContainer}>
       <section className={styles.movieList}>
-        <h2 className={styles.movieListHeading}>
+        <h3 className={styles.movieListHeading}>
           {category === "search"
-            ? "Search Results"
+            ? `Search Results${totalResults ? ` (${totalResults})` : ""}`
             : `${
                 category.charAt(0).toUpperCase() +
                 category.slice(1).replace("_", " ")
               } Movies`}
-        </h2>
+        </h3>
         <div className={styles.movieListGrid}>
           {movies.map((movie) => (
             <MovieCard key={movie.id} movie={movie} />

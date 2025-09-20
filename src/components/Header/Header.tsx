@@ -1,8 +1,25 @@
-import { Link, useLocation } from "react-router-dom";
+import { useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import styles from "./Header.module.css";
 
 const Header = () => {
+  const [searchQuery, setSearchQuery] = useState<string>("");
   const location = useLocation();
+  const navigate = useNavigate();
+
+  // Handle submission of search query
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      // Navigate to search results page or update current page
+      navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+      setSearchQuery(""); // Clear input after search
+    }
+  };
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+  };
 
   return (
     <header className={styles.header}>
@@ -13,15 +30,18 @@ const Header = () => {
           </h3>
         </Link>
 
-        <div className={styles.searchContainer}>
+        <form className={styles.searchContainer} onSubmit={handleSearchSubmit}>
           <input
             type="text"
             placeholder="Search movies..."
             className={styles.searchInput}
-            disabled // Disabled for now. To enable when I implement search
+            value={searchQuery}
+            onChange={handleSearchChange}
           />
-          <i className="fa-solid fa-search" />
-        </div>
+          <button type="submit" className={styles.searchButton}>
+            <i className="fa-solid fa-search" />
+          </button>
+        </form>
 
         <nav className={styles.navBar}>
           <Link

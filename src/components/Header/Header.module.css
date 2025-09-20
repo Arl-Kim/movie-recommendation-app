@@ -46,9 +46,17 @@
   color: var(--dark-violet);
 }
 
-.searchContainer i {
+.searchButton {
+  background: inherit;
+  color: var(--strong-yellow-green);
+  padding: 0;
   position: absolute;
-  right: 5px;
+  right: 10px;
+}
+
+.searchButton:hover {
+  background: none;
+  color: var(--dark-violet);
 }
 
 .navBar {
