@@ -1,4 +1,8 @@
+import { authService } from "../services/authService.ts";
 import type { AppState, AppAction } from "../types/appState.ts";
+
+// Get initial auth satte from localStorage
+const { token, user } = authService.getStoredAuth();
 
 export const initialState: AppState = {
   movies: [],
@@ -13,6 +17,13 @@ export const initialState: AppState = {
   isModalLoading: false,
   error: null,
   modalError: null,
+  auth: {
+    user: user,
+    token: token,
+    isAuthenticated: !!token && !!user,
+    isLoading: false,
+    error: null,
+  },
 };
 
 export const appReducer = (state: AppState, action: AppAction): AppState => {
@@ -65,6 +76,73 @@ export const appReducer = (state: AppState, action: AppAction): AppState => {
 
     case "RESET_STATE":
       return { ...initialState };
+
+    case "AUTH_START":
+      return {
+        ...state,
+        auth: {
+          ...state.auth,
+          isLoading: true,
+          error: null,
+        },
+      };
+
+    case "AUTH_SUCCESS":
+      return {
+        ...state,
+        auth: {
+          user: action.payload.user,
+          token: action.payload.token,
+          isAuthenticated: true,
+          isLoading: false,
+          error: null,
+        },
+      };
+
+    case "AUTH_FAIL":
+      return {
+        ...state,
+        auth: {
+          ...state.auth,
+          isLoading: false,
+          error: action.payload,
+        },
+      };
+
+    case "AUTH_LOGOUT":
+      return {
+        ...state,
+        auth: {
+          user: null,
+          token: null,
+          isAuthenticated: false,
+          isLoading: false,
+          error: null,
+        },
+      };
+
+    case "AUTH_CLEAR_ERROR":
+      return {
+        ...state,
+        auth: {
+          ...state.auth,
+          error: null,
+        },
+      };
+
+    case "UPDATE_FAVORITES":
+      return {
+        ...state,
+        auth: {
+          ...state.auth,
+          user: state.auth.user
+            ? {
+                ...state.auth.user,
+                favorites: action.payload,
+              }
+            : null,
+        },
+      };
 
     default:
       return state;

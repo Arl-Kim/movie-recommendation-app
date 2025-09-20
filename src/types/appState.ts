@@ -1,3 +1,4 @@
+import type { AuthState } from "./auth.ts";
 import { type Movie, type MovieCredits } from "./movie.ts";
 import { type MovieCategory } from "./movieCategory.ts";
 
@@ -21,6 +22,9 @@ export interface AppState {
   // Error states
   error: string | null;
   modalError: string | null;
+
+  // Authentication state
+  auth: AuthState;
 }
 
 // Define action types
@@ -38,4 +42,10 @@ export type AppAction =
   | { type: "SET_CATEGORY"; payload: MovieCategory }
   | { type: "SET_SEARCH_QUERY"; payload: string }
   | { type: "SET_CURRENT_PAGE"; payload: number }
-  | { type: "RESET_STATE" };
+  | { type: "RESET_STATE" }
+  | { type: "AUTH_START" }
+  | { type: "AUTH_SUCCESS"; payload: { user: any; token: string } }
+  | { type: "AUTH_FAIL"; payload: string }
+  | { type: "AUTH_LOGOUT" }
+  | { type: "AUTH_CLEAR_ERROR" }
+  | { type: "UPDATE_FAVORITES"; payload: number[] };
