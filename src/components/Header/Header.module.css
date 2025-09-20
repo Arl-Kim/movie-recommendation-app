@@ -58,13 +58,13 @@
 }
 
 .navLink {
-  color: var(--strong-yellow-green);
+  color: var(--moderate-violet);
   font-size: 0.9em;
 }
 
 .navLink:hover,
 .navLinkActive {
-  color: var(--transparent-yellow-green);
+  color: var(--strong-yellow-green);
 }
 
 /* RESPONSIVE */
