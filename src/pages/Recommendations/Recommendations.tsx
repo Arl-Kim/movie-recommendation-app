@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useAppContext } from "../../contexts/AppContext.tsx";
+import { useAppActions } from "../../hooks/useAppActions.ts";
 import { tmdbApiService } from "../../services/tmdbApiClient.ts";
-import type { Movie } from "../../types/movie.ts";
 import type { MovieCategory } from "../../types/movieCategory.ts";
 import MovieList from "../../components/MovieList/MovieList.tsx";
 import CategorySelector from "../../components/CategorySelector/CategorySelector.tsx";
@@ -9,18 +10,30 @@ import MovieDetails from "../../components/MovieDetails/MovieDetails.tsx";
 import styles from "./Recommendations.module.css";
 
 const Recommendations = () => {
-  const [movies, setMovies] = useState<Movie[]>([]);
-  const [currentCategory, setCurrentCategory] =
-    useState<MovieCategory>("popular");
-  const [selectedMovieId, setSelectedMovieId] = useState<number | null>(null);
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const [totalPages, setTotalPages] = useState<number>(1);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+  const { state } = useAppContext();
+  const {
+    setLoading,
+    setError,
+    setMovies,
+    setCategory,
+    setCurrentPage,
+    setSelectedMovie,
+  } = useAppActions();
+
+  const {
+    movies,
+    currentCategory,
+    currentPage,
+    totalPages,
+    totalResults,
+    isLoading,
+    error,
+    selectedMovie,
+  } = state;
 
   const fetchMovies = async (category: MovieCategory, page: number) => {
     try {
-      setIsLoading(true);
+      setLoading(true);
       setError(null);
 
       let data;
@@ -41,13 +54,14 @@ const Recommendations = () => {
           data = await tmdbApiService.getPopularMovies(page);
       }
 
-      setMovies(data.results);
-      setTotalPages(Math.min(data.total_pages, 500)); // 500 is TMDB limit
+      setMovies(
+        data.results,
+        Math.min(data.total_pages, 500),
+        data.total_results
+      );
     } catch (err) {
       console.error("Failed to fetch movies:", err);
       setError("Oops! Could not load movies. Please try again later.");
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -56,8 +70,7 @@ const Recommendations = () => {
   }, [currentCategory, currentPage]);
 
   const handleCategoryChange = (category: MovieCategory) => {
-    setCurrentCategory(category);
-    setCurrentPage(1); // Resets to first page on category change
+    setCategory(category);
   };
 
   const handlePageChange = (page: number) => {
@@ -66,11 +79,12 @@ const Recommendations = () => {
   };
 
   const handleMovieClick = (movieId: number) => {
-    setSelectedMovieId(movieId);
+    const movie = movies.find((m) => m.id === movieId) || null;
+    setSelectedMovie(movie);
   };
 
   const handleCloseModal = () => {
-    setSelectedMovieId(null);
+    setSelectedMovie(null);
   };
 
   if (isLoading) {
@@ -91,22 +105,19 @@ const Recommendations = () => {
         />
       </div>
 
-      {isLoading ? (
-        <Spinner />
-      ) : (
-        <MovieList
-          movies={movies}
-          category={currentCategory}
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={handlePageChange}
-          onMovieClick={handleMovieClick}
-          isLoading={isLoading}
-        />
-      )}
+      <MovieList
+        movies={movies}
+        category={currentCategory}
+        currentPage={currentPage}
+        totalPages={totalPages}
+        totalResults={totalResults}
+        onPageChange={handlePageChange}
+        onMovieClick={handleMovieClick}
+        isLoading={isLoading}
+      />
 
-      {selectedMovieId && (
-        <MovieDetails movieId={selectedMovieId} onClose={handleCloseModal} />
+      {selectedMovie && (
+        <MovieDetails movieId={selectedMovie.id} onClose={handleCloseModal} />
       )}
     </div>
   );

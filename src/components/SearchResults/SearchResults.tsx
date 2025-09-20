@@ -1,50 +1,65 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
+import { useAppContext } from "../../contexts/AppContext.tsx";
+import { useAppActions } from "../../hooks/useAppActions.ts";
 import { tmdbApiService } from "../../services/tmdbApiClient.ts";
-import type { Movie } from "../../types/movie.ts";
-import MovieList from "../../components/MovieList/MovieList.tsx";
-import Spinner from "../../components/Spinner/Spinner.tsx";
-import styles from "./SearchResults.module.css";
+import MovieList from "../MovieList/MovieList.tsx";
 import MovieDetails from "../MovieDetails/MovieDetails.tsx";
+import Spinner from "../Spinner/Spinner.tsx";
+import styles from "./SearchResults.module.css";
 
 const SearchResults = () => {
   const [searchParams] = useSearchParams();
   const query = searchParams.get("q") || "";
 
-  const [movies, setMovies] = useState<Movie[]>([]);
-  const [selectedMovieId, setSelectedMovieId] = useState<number | null>(null);
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const [totalPages, setTotalPages] = useState<number>(1);
-  const [totalResults, setTotalResults] = useState<number>(0);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+  const { state } = useAppContext();
+  const {
+    setLoading,
+    setError,
+    setMovies,
+    setSearchQuery,
+    setCurrentPage,
+    setSelectedMovie,
+  } = useAppActions();
+
+  const {
+    movies,
+    currentPage,
+    totalPages,
+    totalResults,
+    isLoading,
+    error,
+    selectedMovie,
+  } = state;
 
   const fetchSearchResults = async (searchQuery: string, page: number) => {
     try {
-      setIsLoading(true);
+      setLoading(true);
       setError(null);
 
       const data = await tmdbApiService.searchMovies(searchQuery, page);
 
-      setMovies(data.results);
-      setTotalPages(Math.min(data.total_pages, 500)); // TMDB limits to 500 pages
-      setTotalResults(data.total_results); // Capture total results
+      setMovies(
+        data.results,
+        Math.min(data.total_pages, 500),
+        data.total_results
+      );
     } catch (err) {
       console.error("Failed to fetch search results:", err);
       setError("Oops! Could not load search results. Please try again later.");
-    } finally {
-      setIsLoading(false);
     }
   };
 
   useEffect(() => {
+    // Update search query in global state
+    setSearchQuery(query);
+
     if (query) {
       setCurrentPage(1); // Reset to first page for new search
       fetchSearchResults(query, 1);
     } else {
-      setMovies([]);
-      setTotalResults(0);
-      setIsLoading(false);
+      // Clear movies if no query
+      setMovies([], 1, 0);
     }
   }, [query]);
 
@@ -57,11 +72,12 @@ const SearchResults = () => {
   };
 
   const handleMovieClick = (movieId: number) => {
-    setSelectedMovieId(movieId);
+    const movie = movies.find((m) => m.id === movieId) || null;
+    setSelectedMovie(movie);
   };
 
   const handleCloseModal = () => {
-    setSelectedMovieId(null);
+    setSelectedMovie(null);
   };
 
   if (isLoading) {
@@ -102,8 +118,8 @@ const SearchResults = () => {
         />
       )}
 
-      {selectedMovieId && (
-        <MovieDetails movieId={selectedMovieId} onClose={handleCloseModal} />
+      {selectedMovie && (
+        <MovieDetails movieId={selectedMovie.id} onClose={handleCloseModal} />
       )}
     </div>
   );
