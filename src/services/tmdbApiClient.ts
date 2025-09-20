@@ -1,5 +1,9 @@
 import axios, { type AxiosInstance, type AxiosResponse } from "axios";
-import { type MoviesResponse, type Movie } from "../types/movie";
+import {
+  type MoviesResponse,
+  type Movie,
+  type MovieCredits,
+} from "../types/movie.ts";
 
 // Create a customized Axios instance with a base configuration
 const tmdbApiClient: AxiosInstance = axios.create({
@@ -91,7 +95,7 @@ export const tmdbApiService = {
     return response.data;
   },
 
-  // Function to search movies (to implement this in full later)
+  // Function to search movies
   async searchMovies(query: string, page: number = 1): Promise<MoviesResponse> {
     const cacheKey = `search_${query}_${page}`;
 
@@ -112,7 +116,7 @@ export const tmdbApiService = {
     return response.data;
   },
 
-  // Function to get a single movie by ID (to implement this in full later)
+  // Function to get a single movie by ID
   async getMovieById(id: number): Promise<Movie> {
     const cacheKey = `movie_${id}`;
 
@@ -124,6 +128,23 @@ export const tmdbApiService = {
     console.log("Cache miss, fetching from API:", cacheKey);
     const response: AxiosResponse<Movie> = await tmdbApiClient.get(
       `movie/${id}`
+    );
+    cache[cacheKey] = response.data;
+    return response.data;
+  },
+
+  // Function to get movie credits
+  async getMovieCredits(id: number): Promise<MovieCredits> {
+    const cacheKey = `credits_${id}`;
+
+    if (cache[cacheKey]) {
+      console.log("Cache hit for:", cacheKey);
+      return cache[cacheKey];
+    }
+
+    console.log("Cache miss, fetching from API:", cacheKey);
+    const response: AxiosResponse<MovieCredits> = await tmdbApiClient.get(
+      `movie/${id}/credits`
     );
     cache[cacheKey] = response.data;
     return response.data;

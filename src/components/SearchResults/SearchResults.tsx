@@ -5,12 +5,14 @@ import type { Movie } from "../../types/movie.ts";
 import MovieList from "../../components/MovieList/MovieList.tsx";
 import Spinner from "../../components/Spinner/Spinner.tsx";
 import styles from "./SearchResults.module.css";
+import MovieDetails from "../MovieDetails/MovieDetails.tsx";
 
 const SearchResults = () => {
   const [searchParams] = useSearchParams();
   const query = searchParams.get("q") || "";
 
   const [movies, setMovies] = useState<Movie[]>([]);
+  const [selectedMovieId, setSelectedMovieId] = useState<number | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [totalResults, setTotalResults] = useState<number>(0);
@@ -54,6 +56,14 @@ const SearchResults = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  const handleMovieClick = (movieId: number) => {
+    setSelectedMovieId(movieId);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedMovieId(null);
+  };
+
   if (isLoading) {
     return <Spinner />;
   }
@@ -87,8 +97,13 @@ const SearchResults = () => {
           totalPages={totalPages}
           totalResults={totalResults}
           onPageChange={handlePageChange}
+          onMovieClick={handleMovieClick}
           isLoading={isLoading}
         />
+      )}
+
+      {selectedMovieId && (
+        <MovieDetails movieId={selectedMovieId} onClose={handleCloseModal} />
       )}
     </div>
   );

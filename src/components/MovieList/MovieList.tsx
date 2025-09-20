@@ -13,6 +13,7 @@ interface MovieListProps {
   totalPages: number;
   totalResults?: number;
   onPageChange: (page: number) => void;
+  onMovieClick: (movieId: number) => void;
   isLoading?: boolean;
 }
 
@@ -23,6 +24,7 @@ const MovieList = ({
   totalPages,
   totalResults,
   onPageChange,
+  onMovieClick,
   isLoading = false,
 }: MovieListProps) => {
   if (isLoading) {
@@ -51,7 +53,11 @@ const MovieList = ({
         </h3>
         <div className={styles.movieListGrid}>
           {movies.map((movie) => (
-            <MovieCard key={movie.id} movie={movie} />
+            <MovieCard
+              key={movie.id}
+              movie={movie}
+              onMovieClick={onMovieClick}
+            />
           ))}
         </div>
         {totalPages > 1 && (

@@ -5,12 +5,14 @@ import type { MovieCategory } from "../../types/movieCategory.ts";
 import MovieList from "../../components/MovieList/MovieList.tsx";
 import CategorySelector from "../../components/CategorySelector/CategorySelector.tsx";
 import Spinner from "../../components/Spinner/Spinner.tsx";
+import MovieDetails from "../../components/MovieDetails/MovieDetails.tsx";
 import styles from "./Recommendations.module.css";
 
 const Recommendations = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [currentCategory, setCurrentCategory] =
     useState<MovieCategory>("popular");
+  const [selectedMovieId, setSelectedMovieId] = useState<number | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -63,6 +65,14 @@ const Recommendations = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  const handleMovieClick = (movieId: number) => {
+    setSelectedMovieId(movieId);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedMovieId(null);
+  };
+
   if (isLoading) {
     return <Spinner />;
   }
@@ -90,8 +100,13 @@ const Recommendations = () => {
           currentPage={currentPage}
           totalPages={totalPages}
           onPageChange={handlePageChange}
+          onMovieClick={handleMovieClick}
           isLoading={isLoading}
         />
+      )}
+
+      {selectedMovieId && (
+        <MovieDetails movieId={selectedMovieId} onClose={handleCloseModal} />
       )}
     </div>
   );
