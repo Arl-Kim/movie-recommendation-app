@@ -77,7 +77,7 @@ const MovieDetails = ({ movieId, onClose }: MovieDetailsProps) => {
     return (
       <div className={styles.modalBackdrop} onClick={handleBackdropClick}>
         <div className={styles.modalContent}>
-          <Spinner />
+          <Spinner source="/assets/spinner_dark.mp4" />
         </div>
       </div>
     );

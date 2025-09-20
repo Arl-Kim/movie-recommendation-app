@@ -1,11 +1,15 @@
 import styles from "./Spinner.module.css";
 
-const Spinner = () => {
+interface SpinnerProps {
+  source?: string; // Optional with a default value
+}
+
+const Spinner = ({ source = "/assets/spinner_light.mp4" }: SpinnerProps) => {
   return (
     <div className={styles.spinnerContainer} data-testid="spinner">
       <video
         className={styles.spinnerVideo}
-        src="/assets/spinner_light.mp4"
+        src={source}
         autoPlay
         muted
         loop

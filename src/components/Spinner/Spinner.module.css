@@ -10,3 +10,16 @@
   width: 200px;
   height: 200px;
 }
+
+/* RESPONSIVE */
+@media (max-width: 520px) {
+  .spinnerContainer {
+    align-items: flex-start;
+    margin-top: 50px;
+  }
+
+  .spinnerVideo {
+    width: 100px;
+    height: 100px;
+  }
+}
