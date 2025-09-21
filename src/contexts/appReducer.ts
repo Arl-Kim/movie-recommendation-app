@@ -24,6 +24,9 @@ export const initialState: AppState = {
     isLoading: false,
     error: null,
   },
+  favorites: [],
+  watchlist: [],
+  isPersonalizationLoading: false,
 };
 
 export const appReducer = (state: AppState, action: AppAction): AppState => {
@@ -143,6 +146,79 @@ export const appReducer = (state: AppState, action: AppAction): AppState => {
             : null,
         },
       };
+
+    case "SET_FAVORITES":
+      return { ...state, favorites: action.payload };
+
+    case "SET_WATCHLIST":
+      return { ...state, watchlist: action.payload };
+
+    case "ADD_TO_FAVORITES":
+      return {
+        ...state,
+        favorites: [...state.favorites, action.payload],
+        auth: state.auth.user
+          ? {
+              ...state.auth,
+              user: {
+                ...state.auth.user,
+                favorites: [...state.auth.user.favorites, action.payload],
+              },
+            }
+          : state.auth,
+      };
+
+    case "REMOVE_FROM_FAVORITES":
+      return {
+        ...state,
+        favorites: state.favorites.filter((id) => id !== action.payload),
+        auth: state.auth.user
+          ? {
+              ...state.auth,
+              user: {
+                ...state.auth.user,
+                favorites: state.auth.user.favorites.filter(
+                  (id) => id !== action.payload
+                ),
+              },
+            }
+          : state.auth,
+      };
+
+    case "ADD_TO_WATCHLIST":
+      return {
+        ...state,
+        watchlist: [...state.watchlist, action.payload],
+        auth: state.auth.user
+          ? {
+              ...state.auth,
+              user: {
+                ...state.auth.user,
+                watchlist: [...state.auth.user.watchlist, action.payload],
+              },
+            }
+          : state.auth,
+      };
+
+    case "REMOVE_FROM_WATCHLIST":
+      return {
+        ...state,
+        watchlist: state.watchlist.filter((id) => id !== action.payload),
+        auth: state.auth.user
+          ? {
+              ...state.auth,
+              user: {
+                ...state.auth.user,
+                watchlist: state.auth.user.watchlist.filter(
+                  (id) => id !== action.payload
+                ),
+              },
+            }
+          : state.auth,
+      };
+
+    case "SET_PERSONALIZATION_LOADING":
+      return { ...state, isPersonalizationLoading: action.payload };
 
     default:
       return state;

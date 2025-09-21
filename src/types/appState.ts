@@ -25,6 +25,11 @@ export interface AppState {
 
   // Authentication state
   auth: AuthState;
+
+  // Personalization state
+  favorites: number[];
+  watchlist: number[];
+  isPersonalizationLoading: boolean;
 }
 
 // Define action types
@@ -48,4 +53,11 @@ export type AppAction =
   | { type: "AUTH_FAIL"; payload: string }
   | { type: "AUTH_LOGOUT" }
   | { type: "AUTH_CLEAR_ERROR" }
-  | { type: "UPDATE_FAVORITES"; payload: number[] };
+  | { type: "UPDATE_FAVORITES"; payload: number[] }
+  | { type: "SET_FAVORITES"; payload: number[] }
+  | { type: "SET_WATCHLIST"; payload: number[] }
+  | { type: "ADD_TO_FAVORITES"; payload: number }
+  | { type: "REMOVE_FROM_FAVORITES"; payload: number }
+  | { type: "ADD_TO_WATCHLIST"; payload: number }
+  | { type: "REMOVE_FROM_WATCHLIST"; payload: number }
+  | { type: "SET_PERSONALIZATION_LOADING"; payload: boolean };

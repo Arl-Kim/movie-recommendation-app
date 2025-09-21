@@ -2,7 +2,12 @@ export interface User {
   id: string;
   email: string;
   name: string;
-  favorites: number[]; // Array of movie IDs
+  favorites: number[];
+  watchlist: number[];
+  preferences?: {
+    favoriteGenres?: number[];
+    dislikedGenres?: number[];
+  };
 }
 
 export interface AuthState {
