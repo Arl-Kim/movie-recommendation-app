@@ -75,6 +75,43 @@
   color: var(--strong-yellow-green);
 }
 
+.authSection {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.profileDetails {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.profileAvatar {
+  padding: 10px;
+  font-size: 0.875em;
+  font-weight: 700;
+  border: 2px solid var(--strong-yellow-green);
+  width: fit-content;
+  height: fit-content;
+  border-radius: 5px;
+}
+
+.greetingText {
+  font-size: 0.6875em;
+  font-weight: 700;
+}
+
+.authButton {
+  background: var(--moderate-violet);
+  color: var(--strong-yellow-green);
+}
+
+.authButton:hover {
+  background: var(--strong-yellow-green);
+  color: var(--dark-violet);
+}
+
 /* RESPONSIVE */
 @media (max-width: 768px) {
   .headerContent {
