@@ -4,23 +4,17 @@ import styles from "./HomeSection.module.css";
 interface HomeSectionProps {
   backgroundColor?: string;
   color?: string;
-  reverse?: boolean;
   children: ReactNode;
 }
 
 const HomeSection = ({
   backgroundColor,
   color,
-  reverse = false,
   children,
 }: HomeSectionProps) => {
   return (
     <section className={styles.homeSection} style={{ backgroundColor, color }}>
-      <div
-        className={`${styles.sectionContent} ${reverse ? styles.reverse : ""}`}
-      >
-        {children}
-      </div>
+      <div className={styles.sectionContent}>{children}</div>
     </section>
   );
 };

@@ -87,13 +87,13 @@ const Home = () => {
       <HomeSection
         backgroundColor="var(--dark-violet)"
         color="var(--strong-yellow-green)"
-        reverse={true}
       >
         <ContentBlock
           title="Add Movies To Your Collection"
           description="Browse movies and add them to your favorites and watchlist. Build your personal movie library."
           buttonText="Create Collection"
           onButtonClick={() => handleAuthAction(handleCreateCollection)}
+          reverse={true}
         >
           <FeaturedMovie onMovieClick={handleMovieClick} />
         </ContentBlock>

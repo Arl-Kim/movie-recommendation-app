@@ -16,6 +16,7 @@
 .hero h1 {
   color: var(--strong-yellow-green);
   margin-bottom: 20px;
+  text-align: center;
 }
 
 .ctaButton {

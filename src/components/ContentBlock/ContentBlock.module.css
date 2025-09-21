@@ -5,6 +5,10 @@
   width: 100%;
 }
 
+.contentBlock.reverse {
+  flex-direction: row-reverse;
+}
+
 .textContent {
   flex: 1;
 }
@@ -26,7 +30,8 @@
 
 /* RESPONSIVE */
 @media (max-width: 768px) {
-  .contentBlock {
+  .contentBlock,
+  .contentBlock.reverse {
     flex-direction: column;
     gap: 20px;
   }
