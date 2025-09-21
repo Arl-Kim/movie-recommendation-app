@@ -1,4 +1,4 @@
-import type { MovieCategory } from "../../types/movieCategory";
+import type { MovieCategory } from "../../types/movieCategory.ts";
 import styles from "./CategorySelector.module.css";
 
 interface CategorySelectorProps {
@@ -11,6 +11,7 @@ const categories: MovieCategory[] = [
   "now_playing",
   "top_rated",
   "upcoming",
+  "latest",
 ];
 
 const CategorySelector = ({

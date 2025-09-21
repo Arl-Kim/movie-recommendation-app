@@ -3,6 +3,7 @@ export type MovieCategory =
   | "now_playing"
   | "top_rated"
   | "upcoming"
+  | "latest"
   | "search";
 
 // Helper function to get display name for category
@@ -12,6 +13,7 @@ export const getCategoryDisplayName = (category: MovieCategory): string => {
     now_playing: "Now Playing",
     top_rated: "Top Rated",
     upcoming: "Upcoming Movies",
+    latest: "Latest Movies",
     search: "Search Results",
   };
   return names[category];

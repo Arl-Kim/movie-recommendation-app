@@ -50,6 +50,9 @@ const Recommendations = () => {
         case "upcoming":
           data = await tmdbApiService.getUpcomingMovies(page);
           break;
+        case "latest":
+          data = await tmdbApiService.getLatestMovies(page);
+          break;
         default:
           data = await tmdbApiService.getPopularMovies(page);
       }

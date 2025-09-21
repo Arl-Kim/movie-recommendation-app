@@ -95,6 +95,31 @@ export const tmdbApiService = {
     return response.data;
   },
 
+  // Function to get movies by release date
+  async getLatestMovies(page: number = 1): Promise<MoviesResponse> {
+    const cacheKey = `latest_${page}`;
+
+    if (cache[cacheKey]) {
+      console.log("Cache hit for:", cacheKey);
+      return cache[cacheKey];
+    }
+
+    console.log("Cache miss, fetching from API:", cacheKey);
+    const response: AxiosResponse<MoviesResponse> = await tmdbApiClient.get(
+      "discover/movie",
+      {
+        params: {
+          page,
+          sort_by: "release_date.desc", // Most recent first
+          "release_date.lte": new Date().toISOString().split("T")[0], // Get only released movies
+        },
+      }
+    );
+
+    cache[cacheKey] = response.data;
+    return response.data;
+  },
+
   // Function to search movies
   async searchMovies(query: string, page: number = 1): Promise<MoviesResponse> {
     const cacheKey = `search_${query}_${page}`;
