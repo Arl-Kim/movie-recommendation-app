@@ -1,0 +1,68 @@
+.leadGeneration {
+  background: linear-gradient(
+    var(--transparent-yellow-green),
+    var(--dark-violet)
+  );
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+}
+
+.benefitsSection {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 20px;
+  margin: 20px 0;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.benefitsHeading {
+  margin-bottom: 20px;
+}
+
+.benefitsList {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  text-align: left;
+}
+
+.benefitItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+}
+
+.benefitIcon {
+  background: rgba(255, 255, 255, 0.2);
+  color: var(--dark-violet);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  flex-shrink: 0;
+  font-size: 1.2em;
+}
+
+.getStartedButton {
+  font-size: 1.3em;
+  margin-bottom: 40px;
+}
+
+.getStartedButton:hover {
+  transform: translateY(-3px);
+}
+
+/* RESPOSNSIVE */
+@media (max-width: 768px) {
+  .leadGeneration {
+    padding: 10px;
+  }
+}

@@ -6,6 +6,7 @@ import ContentBlock from "../../components/ContentBlock/ContentBlock.tsx";
 import FeaturedMovie from "../../components/FeaturedMovie/FeaturedMovie.tsx";
 import MovieDetails from "../../components/MovieDetails/MovieDetails.tsx";
 import AuthModal from "../../components/Auth/AuthModal.tsx";
+import LeadGeneration from "../../components/LeadGeneration/LeadGeneration.tsx";
 import styles from "./Home.module.css";
 
 const Home = () => {
@@ -35,6 +36,11 @@ const Home = () => {
 
   const handleSeeNews = () => {
     navigate("/news");
+  };
+
+  const handleGetStarted = () => {
+    setShowAuthModal(true);
+    setAuthMode("register");
   };
 
   const handleCloseAuthModal = () => {
@@ -103,6 +109,10 @@ const Home = () => {
           <FeaturedMovie onMovieClick={handleMovieClick} />
         </ContentBlock>
       </HomeSection>
+
+      {!auth.isAuthenticated && (
+        <LeadGeneration onGetStarted={handleGetStarted} />
+      )}
 
       {/* Auth Modal */}
       {showAuthModal && (
