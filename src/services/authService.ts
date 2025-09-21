@@ -9,7 +9,7 @@ import type {
 const mockUsers: User[] = [
   {
     id: "1",
-    email: "demo@example.com",
+    email: "demo@savannahmovies.com",
     name: "Demo User",
     favorites: [238, 550, 680], // Some popular movie IDs
   },
@@ -18,9 +18,11 @@ const mockUsers: User[] = [
 // Simulate API delay
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-// Store token in localStorage for persistence
+// Store keys in localStorage for persistence
 const TOKEN_KEY = "movieAppToken";
 const USER_KEY = "movieAppUser";
+const REMEMBER_ME_KEY = "movieAppRememberMe";
+
 export const authService = {
   // Get stored auth data from localStorage
   getStoredAuth: (): { token: string | null; user: User | null } => {
@@ -46,18 +48,42 @@ export const authService = {
     localStorage.removeItem(USER_KEY);
   },
 
+  // Get users's remember me preference
+  getRememberMe: (): boolean => {
+    try {
+      return localStorage.getItem(REMEMBER_ME_KEY) === "true";
+    } catch {
+      return false;
+    }
+  },
+
+  // Set user's remember me preference
+  setRememberMe: (remember: boolean): void => {
+    if (remember) {
+      localStorage.setItem(REMEMBER_ME_KEY, "true");
+    } else {
+      localStorage.removeItem(REMEMBER_ME_KEY);
+    }
+  },
+
   // Mock login function
   login: async (credentials: LoginCredentials): Promise<AuthResponse> => {
     await delay(1000); // Simulate API call
 
     if (
-      credentials.email === "demo@example.com" &&
-      credentials.password === "password"
+      credentials.email === "demo@savannahmovies.com" &&
+      credentials.password === "Savannah123*"
     ) {
       const user = mockUsers[0];
       const token = "mock-jwt-token-" + Date.now();
 
-      authService.setStoredAuth(token, user);
+      // Store remember me preference
+      authService.setRememberMe(credentials.rememberMe || false);
+
+      // Only store auth if remember me is true
+      if (credentials.rememberMe) {
+        authService.setStoredAuth(token, user);
+      }
 
       return { user, token };
     }
@@ -67,7 +93,7 @@ export const authService = {
 
   // Mock register function
   register: async (data: RegisterData): Promise<AuthResponse> => {
-    await delay(1000); // Simulate API call
+    await delay(1000);
 
     // Check if email already exists
     if (mockUsers.some((user) => user.email === data.email)) {

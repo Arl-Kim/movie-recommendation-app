@@ -165,6 +165,11 @@
   color: var(--moderate-violet);
 }
 
+.errorText {
+  color: #ff0000;
+  font-size: 0.75em;
+}
+
 .error {
   display: flex;
   align-items: center;

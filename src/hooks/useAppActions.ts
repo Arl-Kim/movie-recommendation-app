@@ -95,17 +95,20 @@ export const useAppActions = () => {
 
     // Check if user is authenticated on app load
     checkAuth: async () => {
-      const { token, user } = authService.getStoredAuth();
-      if (token && user) {
-        try {
-          const validatedUser = await authService.validateToken(token);
-          dispatch({
-            type: "AUTH_SUCCESS",
-            payload: { user: validatedUser, token },
-          });
-        } catch {
-          authService.clearStoredAuth();
-          dispatch({ type: "AUTH_LOGOUT" });
+      const rememberMe = authService.getRememberMe();
+      if (rememberMe) {
+        const { token, user } = authService.getStoredAuth();
+        if (token && user) {
+          try {
+            const validatedUser = await authService.validateToken(token);
+            dispatch({
+              type: "AUTH_SUCCESS",
+              payload: { user: validatedUser, token },
+            });
+          } catch {
+            authService.clearStoredAuth();
+            dispatch({ type: "AUTH_LOGOUT" });
+          }
         }
       }
     },
