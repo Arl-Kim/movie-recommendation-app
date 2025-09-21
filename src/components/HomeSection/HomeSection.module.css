@@ -1,0 +1,28 @@
+.homeSection {
+  padding: 20px;
+}
+
+.sectionContent {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.sectionContent.reverse {
+  flex-direction: row-reverse;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .sectionContent {
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+  }
+
+  .sectionContent.reverse {
+    flex-direction: column;
+  }
+}

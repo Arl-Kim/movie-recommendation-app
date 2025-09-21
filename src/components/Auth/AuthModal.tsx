@@ -7,10 +7,18 @@ import styles from "./Auth.module.css";
 
 interface AuthModalProps {
   onClose: () => void;
+  initialMode?: "login" | "register";
+  onSwitchToRegister?: () => void;
+  onSwitchToLogin?: () => void;
 }
 
-const AuthModal = ({ onClose }: AuthModalProps) => {
-  const [isLogin, setIsLogin] = useState(true);
+const AuthModal = ({
+  onClose,
+  initialMode = "login",
+  onSwitchToRegister,
+  onSwitchToLogin,
+}: AuthModalProps) => {
+  const [isLogin, setIsLogin] = useState(initialMode === "login");
   const { state } = useAppContext();
   const { auth } = state;
 
@@ -18,6 +26,16 @@ const AuthModal = ({ onClose }: AuthModalProps) => {
     if (e.target === e.currentTarget) {
       onClose();
     }
+  };
+
+  const handleSwitchToRegister = () => {
+    setIsLogin(false);
+    onSwitchToRegister?.();
+  };
+
+  const handleSwitchToLogin = () => {
+    setIsLogin(true);
+    onSwitchToLogin?.();
   };
 
   if (auth.isLoading) {
@@ -39,12 +57,12 @@ const AuthModal = ({ onClose }: AuthModalProps) => {
 
         {isLogin ? (
           <LoginForm
-            onSwitchToRegister={() => setIsLogin(false)}
+            onSwitchToRegister={handleSwitchToRegister}
             onClose={onClose}
           />
         ) : (
           <RegisterForm
-            onSwitchToLogin={() => setIsLogin(true)}
+            onSwitchToLogin={handleSwitchToLogin}
             onClose={onClose}
           />
         )}
