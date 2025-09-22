@@ -1,3 +1,5 @@
+import { useAppContext } from "../../contexts/AppContext.tsx";
+import { personalizationService } from "../../services/personalizationService.ts";
 import type { Movie } from "../../types/movie.ts";
 import MovieActions from "../MovieActions/MovieActions.tsx";
 import styles from "./MovieCard.module.css";
@@ -14,12 +16,19 @@ const MovieCard = ({
   onMovieClick,
   showActions = true,
 }: MovieCardProps) => {
+  const { state } = useAppContext();
+  const { auth } = state;
+
   // Construct the full image URL using the poster_path
   const imageUrl = movie.poster_path
     ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
     : "/assets/movie_placeholder.webp";
 
   const handleClick = () => {
+    // Track interaction if user is authenticated
+    if (auth.isAuthenticated && auth.user) {
+      personalizationService.trackMovieClick(auth.user.id, movie.id);
+    }
     onMovieClick(movie.id);
   };
 
@@ -36,12 +45,18 @@ const MovieCard = ({
         onClick={handleClick}
       />
       <div className={styles.movieInfo}>
-        <h4 className={styles.movieTitle} onClick={handleClick}>{movie.title}</h4>
+        <h4 className={styles.movieTitle} onClick={handleClick}>
+          {movie.title}
+        </h4>
         <p className={styles.movieRating} onClick={handleClick}>
           <i className="fa-solid fa-star" />
           {movie.vote_average}
         </p>
-        <p className={styles.movieOverview} onClick={handleClick}>{movie.overview}</p>
+        <p className={styles.movieOverview} onClick={handleClick}>
+          {movie.overview?.length > 120
+            ? `${movie.overview.substring(0, 120)}...`
+            : movie.overview}
+        </p>
         <p className={styles.movieReleaseDate}>{movie.release_date || "TBA"}</p>
         {showActions && (
           <div onClick={(e) => e.stopPropagation()}>

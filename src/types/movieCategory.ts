@@ -6,6 +6,7 @@ export type MovieCategory =
   | "latest"
   | "favorites"
   | "watchlist"
+  | "personalized"
   | "search";
 
 // Helper function to get display name for category
@@ -18,6 +19,7 @@ export const getCategoryDisplayName = (category: MovieCategory): string => {
     latest: "Latest Movies",
     favorites: "Your Favorite Movies",
     watchlist: "Your Watchlist",
+    personalized: "Your Personalized Recommendations",
     search: "Search Results",
   };
   return names[category];

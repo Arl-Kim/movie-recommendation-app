@@ -62,16 +62,33 @@ const MovieDetails = ({ movieId, onClose }: MovieDetailsProps) => {
 
   // Get directors from crew
   const directors =
-    credits?.crew.filter((person) => person.job === "Director") || [];
+    credits?.crew
+      .filter((person) => person.job === "Director")
+      .filter(
+        (director, index, self) =>
+          index === self.findIndex((d) => d.id === director.id)
+      ) || [];
 
   // Get main cast (first 10 by order)
   const mainCast =
-    credits?.cast.sort((a, b) => a.order - b.order).slice(0, 10) || [];
+    credits?.cast
+      .sort((a, b) => a.order - b.order)
+      .filter(
+        (actor, index, self) =>
+          index === self.findIndex((a) => a.id === actor.id)
+      )
+      .slice(0, 10) || [];
 
   // Get other crew members (excluding directors)
   const otherCrew =
-    credits?.crew.filter((person) => person.job !== "Director").slice(0, 10) ||
-    [];
+    credits?.crew
+      .filter((person) => person.job !== "Director")
+      .filter(
+        (member, index, self) =>
+          index ===
+          self.findIndex((m) => m.id === member.id && m.job === member.job)
+      )
+      .slice(0, 10) || [];
 
   if (isLoading) {
     return (
@@ -90,7 +107,7 @@ const MovieDetails = ({ movieId, onClose }: MovieDetailsProps) => {
           <div className={styles.error}>
             <p>{error}</p>
             <button onClick={onClose} className={styles.closeButton}>
-              Close
+              <i className="fa-solid fa-xmark" />
             </button>
           </div>
         </div>
@@ -108,6 +125,11 @@ const MovieDetails = ({ movieId, onClose }: MovieDetailsProps) => {
       month: "long",
       day: "numeric",
     });
+  };
+
+  // Helper function to create unique keys for crew/cast members
+  const getPersonKey = (person: any, index: number) => {
+    return `${person.id}-${person.job || person.character}-${index}`;
   };
 
   return (
@@ -203,8 +225,11 @@ const MovieDetails = ({ movieId, onClose }: MovieDetailsProps) => {
           <div className={`${styles.section} ${styles.castSection}`}>
             <h4>Cast</h4>
             <div className={styles.castGrid}>
-              {mainCast.map((actor) => (
-                <div key={actor.id} className={styles.castMember}>
+              {mainCast.map((actor, index) => (
+                <div
+                  key={getPersonKey(actor, index)}
+                  className={styles.castMember}
+                >
                   <img
                     src={
                       actor.profile_path
@@ -230,8 +255,11 @@ const MovieDetails = ({ movieId, onClose }: MovieDetailsProps) => {
           <div className={`${styles.section} ${styles.crewSection}`}>
             <h4>Crew</h4>
             <div className={styles.crewList}>
-              {otherCrew.map((member) => (
-                <div key={member.id} className={styles.crewMember}>
+              {otherCrew.map((member, index) => (
+                <div
+                  key={getPersonKey(member, index)}
+                  className={styles.crewMember}
+                >
                   <span className={styles.crewName}>{member.name}</span>
                   <span className={styles.crewJob}>{member.job}</span>
                 </div>

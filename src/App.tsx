@@ -6,6 +6,7 @@ import ScrollToTop from "./components/ScrollToTop/ScrollToTop.tsx";
 import Header from "./components/Header/Header.tsx";
 import Home from "./pages/Home/Home.tsx";
 import Recommendations from "./pages/Recommendations/Recommendations.tsx";
+import PersonalizedRecommendations from "./pages/PersonalizedRecommendations/PersonalizedRecommendations.tsx";
 import News from "./pages/News/News.tsx";
 import SearchResults from "./components/SearchResults/SearchResults.tsx";
 import Favorites from "./pages/Favorites/Favorites.tsx";
@@ -34,6 +35,10 @@ const AppContent = () => {
       <Routes>
         <Route index element={<Home />} />
         <Route path="/recommendations" element={<Recommendations />} />
+        <Route
+          path="/personalized-recommendations"
+          element={<PersonalizedRecommendations />}
+        />
         <Route path="/news" element={<News />} />
         <Route path="/search" element={<SearchResults />} />
         <Route path="/favorites" element={<Favorites />} />

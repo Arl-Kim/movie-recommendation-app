@@ -4,10 +4,9 @@ export interface User {
   name: string;
   favorites: number[];
   watchlist: number[];
-  preferences?: {
-    favoriteGenres?: number[];
-    dislikedGenres?: number[];
-  };
+  preferences?: UserPreferences;
+  interactions: UserInteraction[];
+  searchHistory: string[];
 }
 
 export interface AuthState {
@@ -34,4 +33,21 @@ export interface RegisterData {
 export interface AuthResponse {
   user: User;
   token: string;
+}
+
+export interface UserPreferences {
+  favoriteGenres: number[];
+  dislikedGenres: number[];
+  preferredReleaseDecades: number[];
+  minRating: number;
+  likedKeywords: string[];
+  favoriteDirectors: number[];
+  favoriteActors: number[];
+}
+
+export interface UserInteraction {
+  movieId: number;
+  type: "click" | "favorite" | "watchlist" | "search";
+  timestamp: number;
+  metadata?: any;
 }

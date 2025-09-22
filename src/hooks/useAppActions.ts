@@ -4,6 +4,7 @@ import { authService } from "../services/authService.ts";
 import { personalizationService } from "../services/personalizationService.ts";
 import type { LoginCredentials, RegisterData } from "../types/auth.ts";
 import type { MovieCategory } from "../types/movieCategory.ts";
+import type { Movie } from "../types/movie.ts";
 
 export const useAppActions = () => {
   const { state, dispatch } = useAppContext();
@@ -70,7 +71,7 @@ export const useAppActions = () => {
   }, [state.auth.user, dispatch]);
 
   const getPersonalizedRecommendations = useCallback(async (): Promise<
-    any[]
+    Movie[]
   > => {
     if (!state.auth.user) return [];
 
@@ -83,6 +84,24 @@ export const useAppActions = () => {
       return [];
     }
   }, [state.auth.user]);
+
+  const trackMovieClick = useCallback(
+    (movieId: number) => {
+      if (state.auth.user) {
+        personalizationService.trackMovieClick(state.auth.user.id, movieId);
+      }
+    },
+    [state.auth.user]
+  );
+
+  const addSearchToHistory = useCallback(
+    (query: string) => {
+      if (state.auth.user) {
+        personalizationService.addSearchToHistory(state.auth.user.id, query);
+      }
+    },
+    [state.auth.user]
+  );
 
   // Simple actions that don't need state
   const setLoading = (isLoading: boolean) =>
@@ -232,5 +251,7 @@ export const useAppActions = () => {
     toggleWatchlist,
     loadUserPersonalization,
     getPersonalizedRecommendations,
+    trackMovieClick,
+    addSearchToHistory,
   };
 };

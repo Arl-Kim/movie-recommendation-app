@@ -3,6 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import { useAppContext } from "../../contexts/AppContext.tsx";
 import { useAppActions } from "../../hooks/useAppActions.ts";
 import { tmdbApiService } from "../../services/tmdbApiClient.ts";
+import { personalizationService } from "../../services/personalizationService.ts";
 import MovieList from "../MovieList/MovieList.tsx";
 import MovieDetails from "../MovieDetails/MovieDetails.tsx";
 import Spinner from "../Spinner/Spinner.tsx";
@@ -13,6 +14,7 @@ const SearchResults = () => {
   const query = searchParams.get("q") || "";
 
   const { state } = useAppContext();
+  const { auth } = state;
   const {
     setLoading,
     setError,
@@ -63,6 +65,14 @@ const SearchResults = () => {
     }
   }, [query]);
 
+  // Track search in user history
+  useEffect(() => {
+    if (query && auth.isAuthenticated && auth.user) {
+      personalizationService.addSearchToHistory(auth.user.id, query);
+    }
+  }, [query, auth.isAuthenticated, auth.user]);
+
+  // Handle page change
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
     if (query) {
@@ -71,6 +81,7 @@ const SearchResults = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  // Handle movie card clicks
   const handleMovieClick = (movieId: number) => {
     const movie = movies.find((m) => m.id === movieId) || null;
     setSelectedMovie(movie);
