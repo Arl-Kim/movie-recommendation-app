@@ -20,21 +20,3 @@
   text-align: center;
 }
 
-/* RESPONSIVE */
-@media (max-width: 768px) {
-  .watchlistContainer {
-    padding: 1rem;
-  }
-
-  .header h2 {
-    font-size: 2rem;
-  }
-
-  .emptyState {
-    padding: 2rem 1rem;
-  }
-
-  .emptyState i {
-    font-size: 3rem;
-  }
-}
