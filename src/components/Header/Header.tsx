@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useAppContext } from "../../contexts/AppContext";
-import { useAppActions } from "../../hooks/useAppActions";
+import { useAppContext } from "../../contexts/AppContext.tsx";
+import { useAppActions } from "../../hooks/useAppActions.ts";
+import AuthModal from "../Auth/AuthModal.tsx";
 import styles from "./Header.module.css";
-import AuthModal from "../Auth/AuthModal";
 
 const Header = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -18,9 +18,13 @@ const Header = () => {
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      // Navigate to search results page or update current page
-      navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
-      setSearchQuery(""); // Clear input after search
+      if (!auth.isAuthenticated) {
+        setShowAuthModal(true);
+      } else {
+        // Navigate to search results page or update current page
+        navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+        setSearchQuery(""); // Clear input after search
+      }
     }
   };
 
@@ -40,12 +44,12 @@ const Header = () => {
     }
   };
 
-  // Determine greeting based on user's time
-  const hour = new Date().getHours();
-  let greeting;
-  if (hour < 12) greeting = "Good Morning";
-  else if (hour < 18) greeting = "Good Afternoon";
-  else greeting = "Good Evening";
+  const handleRecommendationsClick = (e: React.MouseEvent) => {
+    if (!auth.isAuthenticated) {
+      e.preventDefault();
+      setShowAuthModal(true);
+    }
+  };
 
   return (
     <>
@@ -74,14 +78,17 @@ const Header = () => {
           </form>
 
           <nav className={styles.navBar}>
-            <Link
-              to="/"
-              className={`${styles.navLink} ${
-                location.pathname === "/" ? styles.navLinkActive : ""
-              }`}
-            >
-              Home
-            </Link>
+            {/* Show Home only for non-authenticated users */}
+            {!auth.isAuthenticated && (
+              <Link
+                to="/"
+                className={`${styles.navLink} ${
+                  location.pathname === "/" ? styles.navLinkActive : ""
+                }`}
+              >
+                Home
+              </Link>
+            )}
             <Link
               to="/recommendations"
               className={`${styles.navLink} ${
@@ -89,23 +96,62 @@ const Header = () => {
                   ? styles.navLinkActive
                   : ""
               }`}
+              onClick={handleRecommendationsClick}
             >
               Recommendations
             </Link>
-            <Link
-              to="/news"
-              className={`${styles.navLink} ${
-                location.pathname === "/news" ? styles.navLinkActive : ""
-              }`}
-            >
-              News
-            </Link>
+
+            {/* Show additional navigation items for authenticated users */}
+            {auth.isAuthenticated && (
+              <>
+                <Link
+                  to="/favorites"
+                  className={`${styles.navLink} ${
+                    location.pathname === "/favorites"
+                      ? styles.navLinkActive
+                      : ""
+                  }`}
+                >
+                  Favorites
+                </Link>
+                <Link
+                  to="/watchlist"
+                  className={`${styles.navLink} ${
+                    location.pathname === "/watchlist"
+                      ? styles.navLinkActive
+                      : ""
+                  }`}
+                >
+                  Watchlist
+                </Link>
+                <Link
+                  to="/personalized-recommendations"
+                  className={`${styles.navLink} ${
+                    location.pathname === "/personalized-recommendations"
+                      ? styles.navLinkActive
+                      : ""
+                  }`}
+                >
+                  For You
+                </Link>
+                <Link
+                  to="/news"
+                  className={`${styles.navLink} ${
+                    location.pathname === "/news" ? styles.navLinkActive : ""
+                  }`}
+                >
+                  News
+                </Link>
+              </>
+            )}
 
             {auth.isAuthenticated ? (
               <div className={styles.authSection}>
                 <div className={styles.profileDetails}>
-                  <span className={styles.profileAvatar}>{auth.user?.name.charAt(0)}</span>
-                  <span className={styles.greetingText}>{greeting}</span>
+                  <span className={styles.profileAvatar}>
+                    {auth.user?.name.charAt(0)}
+                    {auth.user?.name.split(" ")[1]?.charAt(0) || ""}
+                  </span>
                 </div>
                 <button onClick={handleLogout} className={styles.authButton}>
                   Sign Out

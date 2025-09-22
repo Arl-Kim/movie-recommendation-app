@@ -3,6 +3,22 @@
   min-height: calc(100vh - 200px);
 }
 
+.recommendationsTitle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.personalizedButton {
+  color: var(--dark-violet);
+  font-size: 1em;
+  text-decoration: underline;
+}
+
+.personalizedButton:hover {
+  color: var(--strong-yellow-green);
+}
+
 .error {
   color: #ff0000;
   text-align: center;

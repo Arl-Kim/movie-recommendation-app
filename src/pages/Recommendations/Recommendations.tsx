@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useAppContext } from "../../contexts/AppContext.tsx";
 import { useAppActions } from "../../hooks/useAppActions.ts";
 import { tmdbApiService } from "../../services/tmdbApiClient.ts";
@@ -11,6 +12,7 @@ import styles from "./Recommendations.module.css";
 
 const Recommendations = () => {
   const { state } = useAppContext();
+  const { auth } = state;
   const {
     setLoading,
     setError,
@@ -101,7 +103,17 @@ const Recommendations = () => {
   return (
     <div className={styles.recommendationsContainer}>
       <div className={styles.recommendationsHeader}>
-        <h2>Movie Recommendations</h2>
+        <div className={styles.recommendationsTitle}>
+          <h2>Movie Recommendations </h2>
+          {auth.isAuthenticated && (
+            <Link
+              to="/personalized-recommendations"
+              className={styles.personalizedButton}
+            >
+              See Personalized Recommendations
+            </Link>
+          )}
+        </div>
         <CategorySelector
           currentCategory={currentCategory}
           onCategoryChange={handleCategoryChange}

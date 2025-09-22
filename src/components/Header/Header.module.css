@@ -94,7 +94,7 @@
   border: 2px solid var(--strong-yellow-green);
   width: fit-content;
   height: fit-content;
-  border-radius: 5px;
+  border-radius: 50%;
 }
 
 .greetingText {

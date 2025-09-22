@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAppContext } from "../../contexts/AppContext.tsx";
 import HomeSection from "../../components/HomeSection/HomeSection.tsx";
 import ContentBlock from "../../components/ContentBlock/ContentBlock.tsx";
@@ -27,7 +27,12 @@ const Home = () => {
   };
 
   const handleExploreMovies = () => {
-    navigate("/recommendations");
+    if (auth.isAuthenticated) {
+      navigate("/recommendations");
+    } else {
+      setShowAuthModal(true);
+      setAuthMode("login");
+    }
   };
 
   const handleCreateCollection = () => {
@@ -69,9 +74,9 @@ const Home = () => {
         <h1 className={styles.heroHeading}>
           Get Personalized Movie Recommendations
         </h1>
-        <Link to="/recommendations" className={styles.ctaButton}>
+        <button onClick={handleExploreMovies} className={styles.ctaButton}>
           Explore Movies
-        </Link>
+        </button>
       </div>
       <HomeSection>
         <ContentBlock
