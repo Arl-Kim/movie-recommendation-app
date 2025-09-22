@@ -296,7 +296,7 @@ export const personalizationService = {
     // Analyze genres
     const genreCount: Map<number, number> = new Map();
     validMovies.forEach(movie => {
-      // @ts-ignore - TMDB movie has genres array
+      // @ts-expect-error - TMDB movie has genres array
       movie.genres?.forEach((genre: { id: number; name: string }) => {
         genreCount.set(genre.id, (genreCount.get(genre.id) || 0) + 1);
         genreCache.set(genre.id, genre.name);

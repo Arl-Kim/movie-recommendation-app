@@ -73,12 +73,8 @@ const RegisterForm = ({ onSwitchToLogin, onClose }: RegisterFormProps) => {
       return;
     }
 
-    try {
-      await register(formData);
-      onClose();
-    } catch (error) {
-      // Error is handled by the auth state
-    }
+    await register(formData);
+    onClose();
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

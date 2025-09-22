@@ -54,12 +54,8 @@ const LoginForm = ({ onSwitchToRegister, onClose }: LoginFormProps) => {
       return;
     }
 
-    try {
-      await login(credentials);
-      onClose();
-    } catch (error) {
-      // Error is handled by the auth state
-    }
+    await login(credentials);
+    onClose();
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
