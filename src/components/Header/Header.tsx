@@ -8,6 +8,7 @@ import styles from "./Header.module.css";
 const Header = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [showAuthModal, setShowAuthModal] = useState<boolean>(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
   const location = useLocation();
   const navigate = useNavigate();
   const { state } = useAppContext();
@@ -21,9 +22,8 @@ const Header = () => {
       if (!auth.isAuthenticated) {
         setShowAuthModal(true);
       } else {
-        // Navigate to search results page or update current page
         navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
-        setSearchQuery(""); // Clear input after search
+        setSearchQuery("");
       }
     }
   };
@@ -34,6 +34,7 @@ const Header = () => {
 
   const handleAuthClick = () => {
     setShowAuthModal(true);
+    closeMobileMenu();
   };
 
   const handleLogout = async () => {
@@ -44,18 +45,47 @@ const Header = () => {
     }
   };
 
-  const handleRecommendationsClick = (e: React.MouseEvent) => {
-    if (!auth.isAuthenticated) {
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
+  };
+
+  const handleNavLinkClick = (e: React.MouseEvent, path: string) => {
+    if (!auth.isAuthenticated && path !== "/") {
       e.preventDefault();
       setShowAuthModal(true);
     }
+    closeMobileMenu();
   };
+
+  // Navigation items configuration
+  const getNavItems = () => {
+    const baseItems = [
+      ...(!auth.isAuthenticated ? [{ path: "/", label: "Home" }] : []),
+      { path: "/recommendations", label: "Recommendations" },
+      ...(auth.isAuthenticated
+        ? [
+            { path: "/favorites", label: "Favorites" },
+            { path: "/watchlist", label: "Watchlist" },
+            { path: "/personalized-recommendations", label: "For You" },
+          ]
+        : []),
+      { path: "/news", label: "News" },
+    ];
+
+    return baseItems;
+  };
+
+  const navItems = getNavItems();
 
   return (
     <>
       <header className={styles.header}>
         <div className={styles.headerContent}>
-          <Link to="/" className={styles.textLogo}>
+          <Link to="/" className={styles.textLogo} onClick={closeMobileMenu}>
             <h3>
               <span className={styles.coloredSpan}>Savannah</span>Movies
             </h3>
@@ -77,73 +107,20 @@ const Header = () => {
             </button>
           </form>
 
+          {/* Desktop Navigation */}
           <nav className={styles.navBar}>
-            {/* Show Home only for non-authenticated users */}
-            {!auth.isAuthenticated && (
+            {navItems.map((item) => (
               <Link
-                to="/"
+                key={item.path}
+                to={item.path}
                 className={`${styles.navLink} ${
-                  location.pathname === "/" ? styles.navLinkActive : ""
+                  location.pathname === item.path ? styles.navLinkActive : ""
                 }`}
+                onClick={(e) => handleNavLinkClick(e, item.path)}
               >
-                Home
+                {item.label}
               </Link>
-            )}
-            <Link
-              to="/recommendations"
-              className={`${styles.navLink} ${
-                location.pathname === "/recommendations"
-                  ? styles.navLinkActive
-                  : ""
-              }`}
-              onClick={handleRecommendationsClick}
-            >
-              Recommendations
-            </Link>
-
-            {/* Show additional navigation items for authenticated users */}
-            {auth.isAuthenticated && (
-              <>
-                <Link
-                  to="/favorites"
-                  className={`${styles.navLink} ${
-                    location.pathname === "/favorites"
-                      ? styles.navLinkActive
-                      : ""
-                  }`}
-                >
-                  Favorites
-                </Link>
-                <Link
-                  to="/watchlist"
-                  className={`${styles.navLink} ${
-                    location.pathname === "/watchlist"
-                      ? styles.navLinkActive
-                      : ""
-                  }`}
-                >
-                  Watchlist
-                </Link>
-                <Link
-                  to="/personalized-recommendations"
-                  className={`${styles.navLink} ${
-                    location.pathname === "/personalized-recommendations"
-                      ? styles.navLinkActive
-                      : ""
-                  }`}
-                >
-                  For You
-                </Link>
-                <Link
-                  to="/news"
-                  className={`${styles.navLink} ${
-                    location.pathname === "/news" ? styles.navLinkActive : ""
-                  }`}
-                >
-                  News
-                </Link>
-              </>
-            )}
+            ))}
 
             {auth.isAuthenticated ? (
               <div className={styles.authSection}>
@@ -163,7 +140,72 @@ const Header = () => {
               </button>
             )}
           </nav>
+
+          {/* Mobile Menu Button */}
+          <button
+            className={styles.mobileMenuButton}
+            onClick={toggleMobileMenu}
+            aria-label="Toggle navigation menu"
+          >
+            <i
+              className={`fa-solid ${
+                isMobileMenuOpen ? "fa-xmark" : "fa-bars"
+              }`}
+            />
+          </button>
         </div>
+
+        {/* Mobile Navigation Menu */}
+        {isMobileMenuOpen && (
+          <div className={styles.mobileMenu}>
+            <nav className={styles.mobileNav}>
+              {navItems.map((item) => (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className={`${styles.mobileNavLink} ${
+                    location.pathname === item.path
+                      ? styles.mobileNavLinkActive
+                      : ""
+                  }`}
+                  onClick={(e) => handleNavLinkClick(e, item.path)}
+                >
+                  {item.label}
+                </Link>
+              ))}
+
+              {auth.isAuthenticated ? (
+                <div className={styles.mobileAuthSection}>
+                  <div className={styles.mobileProfile}>
+                    <span className={styles.mobileProfileAvatar}>
+                      {auth.user?.name.charAt(0)}
+                      {auth.user?.name.split(" ")[1]?.charAt(0) || ""}
+                    </span>
+                    <span className={styles.mobileProfileName}>
+                      {auth.user?.name}
+                    </span>
+                  </div>
+                  <button
+                    onClick={() => {
+                      handleLogout();
+                      closeMobileMenu();
+                    }}
+                    className={styles.mobileAuthButton}
+                  >
+                    Sign Out
+                  </button>
+                </div>
+              ) : (
+                <button
+                  onClick={handleAuthClick}
+                  className={styles.mobileAuthButton}
+                >
+                  Sign In
+                </button>
+              )}
+            </nav>
+          </div>
+        )}
       </header>
       {showAuthModal && <AuthModal onClose={() => setShowAuthModal(false)} />}
     </>
