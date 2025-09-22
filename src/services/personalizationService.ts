@@ -14,6 +14,26 @@ export const personalizationService = {
     }
   },
 
+  // Initialize user data if it doesn't exist
+  ensureUserExists: (userId: string): User => {
+    const userData = personalizationService.getUserData();
+
+    if (!userData[userId]) {
+      // Create a basic user structure (Just incase of failure but unlikely)
+      userData[userId] = {
+        id: userId,
+        email: "",
+        name: "",
+        favorites: [],
+        watchlist: [],
+        preferences: {},
+      };
+      personalizationService.saveUserData(userData);
+    }
+
+    return userData[userId];
+  },
+
   // Save user data to localStorage
   saveUserData: (data: Record<string, User>): void => {
     try {
@@ -26,7 +46,7 @@ export const personalizationService = {
   // Add/Remove from favorites
   toggleFavorite: (userId: string, movieId: number): User => {
     const userData = personalizationService.getUserData();
-    const user = userData[userId];
+    const user = personalizationService.ensureUserExists(userId);
 
     if (!user) throw new Error("User not found");
 
@@ -47,7 +67,7 @@ export const personalizationService = {
   // Add/Remove from watchlist
   toggleWatchlist: (userId: string, movieId: number): User => {
     const userData = personalizationService.getUserData();
-    const user = userData[userId];
+    const user = personalizationService.ensureUserExists(userId);
 
     if (!user) throw new Error("User not found");
 
@@ -92,13 +112,12 @@ export const personalizationService = {
   // Get personalized recommendations based on user preferences
   getPersonalizedRecommendations: async (userId: string): Promise<Movie[]> => {
     // This would normally call a recommendation API
-    // For now, we'll return popular movies as mock recommendations
+    // For now, return popular movies as mock recommendations
     const userData = personalizationService.getUserData();
     const user = userData[userId];
 
     if (!user) return [];
 
-    // Mock: Return some popular movies (in real app, this would be AI-based)
     const response = await fetch(
       `https://api.themoviedb.org/3/movie/popular?api_key=${
         import.meta.env.VITE_TMDB_API_KEY
@@ -106,7 +125,7 @@ export const personalizationService = {
     );
     const data = await response.json();
 
-    return data.results.slice(0, 12); // Return first 12 popular movies
+    return data.results.slice(0, 12);
   },
 
   // Update user preferences

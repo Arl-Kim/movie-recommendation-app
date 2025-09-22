@@ -4,6 +4,7 @@ import type {
   AuthResponse,
   User,
 } from "../types/auth.ts";
+import { personalizationService } from "./personalizationService.ts";
 
 // Setup a mock user database
 const mockUsers: User[] = [
@@ -12,6 +13,8 @@ const mockUsers: User[] = [
     email: "demo@savannahmovies.com",
     name: "Demo User",
     favorites: [238, 550, 680], // Some popular movie IDs
+    watchlist: [450, 300, 227],
+    preferences: {},
   },
 ];
 
@@ -102,7 +105,7 @@ export const authService = {
 
     // Check if passwords match
     if (data.password !== data.confirmPassword) {
-      throw new Error("Passwords do not match");
+      throw new Error("Passwords do not match!");
     }
 
     // Create new user
@@ -111,12 +114,19 @@ export const authService = {
       email: data.email,
       name: data.name,
       favorites: [],
+      watchlist: [],
+      preferences: {},
     };
 
     const token = "mock-jwt-token-" + Date.now();
 
     mockUsers.push(newUser);
     authService.setStoredAuth(token, newUser);
+
+    // Also initialize in personalization service
+    const userData = personalizationService.getUserData();
+    userData[newUser.id] = newUser;
+    personalizationService.saveUserData(userData);
 
     return { user: newUser, token };
   },
