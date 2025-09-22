@@ -4,6 +4,8 @@ export type MovieCategory =
   | "top_rated"
   | "upcoming"
   | "latest"
+  | "favorites"
+  | "watchlist"
   | "search";
 
 // Helper function to get display name for category
@@ -14,6 +16,8 @@ export const getCategoryDisplayName = (category: MovieCategory): string => {
     top_rated: "Top Rated",
     upcoming: "Upcoming Movies",
     latest: "Latest Movies",
+    favorites: "Your Favorite Movies",
+    watchlist: "Your Watchlist",
     search: "Search Results",
   };
   return names[category];

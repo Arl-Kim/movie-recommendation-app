@@ -1,0 +1,21 @@
+.favoritesContainer {
+  padding: 20px;
+  min-height: calc(100vh - 200px);
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.emptyState i {
+  font-size: 4em;
+}
+
+.error {
+  color: #ff0000;
+  text-align: center;
+}
