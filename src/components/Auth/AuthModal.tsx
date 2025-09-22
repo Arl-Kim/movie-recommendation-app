@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { useAppContext } from "../../contexts/AppContext";
-import LoginForm from "./LoginForm";
-import RegisterForm from "./RegisterForm";
-import Spinner from "../Spinner/Spinner";
+import { useAppContext } from "../../contexts/AppContext.tsx";
+import LoginForm from "./LoginForm.tsx";
+import RegisterForm from "./RegisterForm.tsx";
+import Spinner from "../Spinner/Spinner.tsx";
 import styles from "./Auth.module.css";
 
 interface AuthModalProps {
@@ -42,7 +42,7 @@ const AuthModal = ({
     return (
       <div className={styles.modalBackdrop} onClick={handleBackdropClick}>
         <div className={styles.modalContent}>
-          <Spinner source="/assets/spinner_dark.mp4" />
+          <Spinner source="/assets/spinner_green.mp4" />
         </div>
       </div>
     );

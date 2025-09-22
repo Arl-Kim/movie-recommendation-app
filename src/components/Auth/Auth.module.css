@@ -138,11 +138,17 @@
   left: 3px;
 }
 
+.submitButtonContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .submitButton {
   background: var(--moderate-violet);
   color: var(--strong-yellow-green);
   border-radius: 5px;
-  width: 105%;
+  width: 50%;
 }
 
 .submitButton:hover {

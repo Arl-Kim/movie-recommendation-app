@@ -149,9 +149,11 @@ const LoginForm = ({ onSwitchToRegister, onClose }: LoginFormProps) => {
             Remember Me
           </label>
         </div>
-        <button type="submit" className={styles.submitButton}>
-          Sign In
-        </button>
+        <div className={styles.submitButtonContainer}>
+          <button type="submit" className={styles.submitButton}>
+            Sign In
+          </button>
+        </div>
       </form>
       <p className={styles.switchText}>
         Don't have an account?{" "}
