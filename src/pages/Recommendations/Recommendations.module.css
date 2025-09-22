@@ -35,3 +35,18 @@
     margin-top: 50px;
   }
 }
+
+@media (max-width: 520px) {
+  .recommendationsTitle {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 462px) {
+  .recommendationsContainer {
+    padding: 10px;
+  }
+}

@@ -31,3 +31,9 @@
     margin-top: 50px;
   }
 }
+
+@media (max-width: 462px) {
+  .watchlistContainer {
+    padding: 10px;
+  }
+}

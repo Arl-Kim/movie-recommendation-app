@@ -27,3 +27,10 @@
 .noMovies i {
   font-size: 3em;
 }
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 600px) and (min-width: 462px) {
+  .movieListGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
