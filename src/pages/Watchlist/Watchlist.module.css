@@ -16,7 +16,18 @@
 }
 
 .error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: #ff0000;
   text-align: center;
 }
 
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .error {
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-top: 50px;
+  }
+}

@@ -59,14 +59,21 @@ const Watchlist = () => {
   }
 
   if (error) {
-    return <div className={styles.error}>{error}</div>;
+    return (
+      <div className={`${styles.error} ${styles.watchlistContainer}`}>
+        {error}
+      </div>
+    );
   }
 
   return (
     <div className={styles.watchlistContainer}>
       <div className={styles.watchListHeader}>
         <h2>Your Watchlist</h2>
-        <p>You have {movies.length} movie{movies.length > 1 && "s"} in your watchlist</p>
+        <p>
+          You have {movies.length} movie{movies.length > 1 && "s"} in your
+          watchlist
+        </p>
       </div>
 
       {movies.length === 0 ? (

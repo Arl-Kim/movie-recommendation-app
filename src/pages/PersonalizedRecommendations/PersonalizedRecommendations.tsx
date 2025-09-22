@@ -90,14 +90,15 @@ const PersonalizedRecommendations = () => {
 
   return (
     <div className={styles.personalizedRecommendations}>
-      <div className={styles.header}>
+      <div className={styles.recommendationsHeader}>
         <h2>Your Personalized Recommendations</h2>
         <p className={styles.subtitle}>
           Based on your favorites, watchlist, and browsing history
         </p>
         {recommendations.length > 0 && (
           <p className={styles.resultCount}>
-            Found {recommendations.length} movies we think you'll love
+            Found {recommendations.length} movie
+            {recommendations.length > 1 && "s"} we think you'll love
           </p>
         )}
       </div>
@@ -107,8 +108,8 @@ const PersonalizedRecommendations = () => {
           <i className="fa-solid fa-magnifying-glass"></i>
           <h3>Not enough data yet</h3>
           <p>
-            Start browsing movies, adding to favorites, and building your
-            watchlist to get better recommendations!
+            Start browsing and searching movies, adding to favorites, and
+            building your watchlist to get better recommendations!
           </p>
         </div>
       ) : (

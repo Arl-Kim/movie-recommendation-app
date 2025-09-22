@@ -50,7 +50,7 @@ const FeaturedMovie = ({ onMovieClick }: FeaturedMovieProps) => {
     const checkAndUpdateFeaturedMovie = async () => {
       const storedData = localStorage.getItem("featuredMovie");
       const now = Date.now();
-      const displayHours = 0 * 1 * 60 * 1000; // 4 hours for now
+      const displayHours = 0 * 5 * 60 * 1000; // 5 Minutes for now
 
       if (storedData) {
         const { movie, timestamp } = JSON.parse(storedData);

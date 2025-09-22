@@ -59,14 +59,21 @@ const Favorites = () => {
   }
 
   if (error) {
-    return <div className={styles.error}>{error}</div>;
+    return (
+      <div className={`${styles.error} ${styles.favoritesContainer}`}>
+        {error}
+      </div>
+    );
   }
 
   return (
     <div className={styles.favoritesContainer}>
       <div className={styles.favoritesHeader}>
         <h2>Your Favorite Movies</h2>
-        <p>You have {movies.length} movie{movies.length > 1 && "s"} in your favorites collection</p>
+        <p>
+          You have {movies.length} movie{movies.length > 1 && "s"} in your
+          favorites collection
+        </p>
       </div>
 
       {movies.length === 0 ? (
