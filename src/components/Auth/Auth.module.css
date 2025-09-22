@@ -44,6 +44,7 @@
 
 .authForm {
   width: 95%;
+  animation: fadeIn 400ms ease-in-out;
 }
 
 .welcomeText {
@@ -207,5 +208,15 @@
 @media (max-width: 520px) {
   .modalContent {
     max-width: 300px;
+  }
+}
+
+/* ANIMATIONS */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }

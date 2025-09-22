@@ -23,6 +23,7 @@
   overflow-y: auto;
   position: relative;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  animation: fadeIn 400ms ease-in-out;
 }
 
 .closeButton {
@@ -248,5 +249,15 @@
 
   .crewList {
     grid-template-columns: 1fr;
+  }
+}
+
+/* ANIMATIONS */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }

@@ -1,6 +1,7 @@
 .personalizedRecommendations {
   padding: 20px;
   min-height: calc(100vh - 200px);
+  animation: fadeIn 400ms ease-in-out;
 }
 
 .resultCount {
@@ -44,5 +45,15 @@
 @media (max-width: 462px) {
   .personalizedRecommendations {
     padding: 10px;
+  }
+}
+
+/* ANIMATIONS */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }

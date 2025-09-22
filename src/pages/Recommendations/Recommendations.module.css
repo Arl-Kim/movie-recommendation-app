@@ -1,6 +1,7 @@
 .recommendationsContainer {
   padding: 20px;
   min-height: calc(100vh - 200px);
+  animation: fadeIn 400ms ease-in-out;
 }
 
 .recommendationsTitle {
@@ -48,5 +49,15 @@
 @media (max-width: 462px) {
   .recommendationsContainer {
     padding: 10px;
+  }
+}
+
+/* ANIMATIONS */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
