@@ -1,0 +1,29 @@
+.movieActions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.actionButton {
+  background: inherit;
+  color: var(--moderate-violet);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.9em;
+  border: 2px solid var(--moderate-violet);
+  z-index: 20;
+}
+
+.actionButton:hover,
+.actionButton.active {
+  background: var(--moderate-violet);
+  color: var(--strong-yellow-green);
+}
+
+.actionButton.active:hover {
+  background: inherit;
+  color: var(--moderate-violet);
+  border-color: var(--moderate-violet);
+}
