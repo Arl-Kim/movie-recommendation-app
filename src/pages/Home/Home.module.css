@@ -13,8 +13,23 @@
   height: 400px;
 }
 
-.hero h1 {
+.heroHeading {
   color: var(--strong-yellow-green);
   margin-bottom: 20px;
   text-align: center;
+}
+
+.heroHeading,
+.ctaButton {
+  animation: fadeIn 400ms ease-in-out;
+}
+
+/* ANIMATIONS */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
