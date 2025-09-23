@@ -84,20 +84,17 @@
   gap: 10px;
 }
 
-.profileDetails {
+.profileDetails,
+.mobileProfileAvatar {
   display: flex;
   align-items: center;
-  gap: 5px;
-}
-
-.profileAvatar,
-.mobileProfileAvatar {
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--strong-yellow-green);
   padding: 10px;
   font-size: 0.875em;
   font-weight: 700;
-  border: 2px solid var(--strong-yellow-green);
-  width: fit-content;
-  height: fit-content;
   border-radius: 50%;
 }
 

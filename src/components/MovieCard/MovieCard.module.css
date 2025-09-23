@@ -61,6 +61,12 @@
 }
 
 /* RESPONSIVE */
+@media (max-width: 768px) {
+  .movieCard:hover {
+    background: var(--strong-yellow-green);
+  }
+}
+
 @media (max-width: 520px) {
   .movieImage {
     max-width: 100%;

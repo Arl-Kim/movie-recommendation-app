@@ -181,7 +181,9 @@ const Header = () => {
                   <div className={styles.mobileProfile}>
                     <span className={styles.mobileProfileAvatar}>
                       {auth.user?.name.charAt(0)}
-                      {auth.user?.name.split(" ")[1]?.charAt(0) || ""}
+                      {auth.user?.name.split(" ")[1]?.charAt(0).toUpperCase() ||
+                        auth.user?.name.charAt(1).toUpperCase() ||
+                        ""}
                     </span>
                     <span className={styles.mobileProfileName}>
                       {auth.user?.name}
