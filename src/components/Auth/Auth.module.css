@@ -209,6 +209,7 @@
 @media (max-width: 520px) {
   .modalContent {
     max-width: 300px;
+    margin-right: 40px;
   }
 }
 
