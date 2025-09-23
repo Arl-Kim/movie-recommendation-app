@@ -16,9 +16,19 @@
   color: #ff0000;
 }
 
+.error i {
+  font-size: 2em;
+}
+
 /* RESPONSIVE */
 @media (min-width: 768px) {
   .featuredMovieContainer {
     max-width: 80%;
+  }
+
+  .error {
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
   }
 }

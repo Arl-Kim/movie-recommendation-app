@@ -127,7 +127,9 @@ const Header = () => {
                 <div className={styles.profileDetails}>
                   <span className={styles.profileAvatar}>
                     {auth.user?.name.charAt(0)}
-                    {auth.user?.name.split(" ")[1]?.charAt(0) || ""}
+                    {auth.user?.name.split(" ")[1]?.charAt(0) ||
+                      auth.user?.name.charAt(1) ||
+                      ""}
                   </span>
                 </div>
                 <button onClick={handleLogout} className={styles.authButton}>

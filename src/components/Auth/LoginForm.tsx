@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAppActions } from "../../hooks/useAppActions.ts";
 import type { LoginCredentials } from "../../types/auth.ts";
 import { validateEmail, validatePassword } from "../../utils/validation.ts";
@@ -25,6 +26,7 @@ const LoginForm = ({ onSwitchToRegister, onClose }: LoginFormProps) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const { login, authClearError } = useAppActions();
   const [errors, setErrors] = useState<FormErrors>({});
+  const navigate = useNavigate();
 
   const togglePasswordVisibility = () => setShowPassword(!showPassword);
 
@@ -56,6 +58,7 @@ const LoginForm = ({ onSwitchToRegister, onClose }: LoginFormProps) => {
 
     await login(credentials);
     onClose();
+    navigate("/recommendations");
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

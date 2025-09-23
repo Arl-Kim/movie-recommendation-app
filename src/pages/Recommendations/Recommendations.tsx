@@ -97,15 +97,11 @@ const Recommendations = () => {
   }
 
   if (error) {
-    return (
-      <div className={`${styles.error} ${styles.recommendationsContainer}`}>
-        {error}
-      </div>
-    );
+    return <div className="error pageContainer">{error}</div>;
   }
 
   return (
-    <div className={styles.recommendationsContainer}>
+    <div className="pageContainer">
       <div className={styles.recommendationsHeader}>
         <div className={styles.recommendationsTitle}>
           <h2>Movie Recommendations </h2>

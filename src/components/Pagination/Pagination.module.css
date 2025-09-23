@@ -25,3 +25,15 @@
 .paginationEllipsis {
   padding: 8px;
 }
+
+/* RESPONSIVE */
+@media (max-width: 520px) {
+  .pagination {
+    max-width: 100%;
+    gap: 0;
+  }
+
+  .paginationEllipsis {
+    padding: 0;
+  }
+}

@@ -6,7 +6,6 @@ import { tmdbApiService } from "../../services/tmdbApiClient.ts";
 import Spinner from "../../components/Spinner/Spinner.tsx";
 import MovieList from "../../components/MovieList/MovieList.tsx";
 import MovieDetails from "../../components/MovieDetails/MovieDetails.tsx";
-import styles from "./Favorites.module.css";
 
 const Favorites = () => {
   const { state } = useAppContext();
@@ -59,16 +58,12 @@ const Favorites = () => {
   }
 
   if (error) {
-    return (
-      <div className={`${styles.error} ${styles.favoritesContainer}`}>
-        {error}
-      </div>
-    );
+    return <div className="error pageContainer">{error}</div>;
   }
 
   return (
-    <div className={styles.favoritesContainer}>
-      <div className={styles.favoritesHeader}>
+    <div className="pageContainer">
+      <div>
         <h2>Your Favorite Movies</h2>
         <p>
           You have {movies.length} movie{movies.length > 1 && "s"} in your
@@ -77,7 +72,7 @@ const Favorites = () => {
       </div>
 
       {movies.length === 0 ? (
-        <div className={styles.emptyState}>
+        <div className="emptyState">
           <i className="fa-solid fa-heart"></i>
           <h2>No favorites yet</h2>
           <p>

@@ -63,7 +63,7 @@ const PersonalizedRecommendations = () => {
 
   if (isLoading) {
     return (
-      <div className={styles.personalizedRecommendations}>
+      <div className="pageContainer">
         <Spinner />
         <p className={styles.loadingText}>Analyzing your preferences...</p>
       </div>
@@ -72,8 +72,8 @@ const PersonalizedRecommendations = () => {
 
   if (error) {
     return (
-      <div className={styles.personalizedRecommendations}>
-        <div className={styles.error}>
+      <div className="pageContainer">
+        <div className="error errorGroup">
           <i className="fa-solid fa-triangle-exclamation"></i>
           <h3>{error}</h3>
           {auth.isAuthenticated ? (
@@ -89,7 +89,7 @@ const PersonalizedRecommendations = () => {
   }
 
   return (
-    <div className={styles.personalizedRecommendations}>
+    <div className="pageContainer">
       <div className={styles.recommendationsHeader}>
         <h2>Your Personalized Recommendations</h2>
         <p className={styles.subtitle}>
@@ -104,7 +104,7 @@ const PersonalizedRecommendations = () => {
       </div>
 
       {recommendations.length === 0 ? (
-        <div className={styles.emptyState}>
+        <div className="emptyState">
           <i className="fa-solid fa-magnifying-glass"></i>
           <h3>Not enough data yet</h3>
           <p>

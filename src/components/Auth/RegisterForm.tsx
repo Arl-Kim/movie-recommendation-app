@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAppActions } from "../../hooks/useAppActions.ts";
 import type { RegisterData } from "../../types/auth.ts";
 import {
@@ -31,6 +32,7 @@ const RegisterForm = ({ onSwitchToLogin, onClose }: RegisterFormProps) => {
   const { register, authClearError } = useAppActions();
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [errors, setErrors] = useState<FormErrors>({});
+  const navigate = useNavigate();
 
   const togglePasswordVisibility = () => setShowPassword(!showPassword);
 
@@ -75,6 +77,7 @@ const RegisterForm = ({ onSwitchToLogin, onClose }: RegisterFormProps) => {
 
     await register(formData);
     onClose();
+    navigate("/recommendations");
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

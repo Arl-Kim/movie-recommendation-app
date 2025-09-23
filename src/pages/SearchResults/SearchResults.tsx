@@ -4,10 +4,9 @@ import { useAppContext } from "../../contexts/AppContext.tsx";
 import { useAppActions } from "../../hooks/useAppActions.ts";
 import { tmdbApiService } from "../../services/tmdbApiClient.ts";
 import { personalizationService } from "../../services/personalizationService.ts";
-import MovieList from "../MovieList/MovieList.tsx";
-import MovieDetails from "../MovieDetails/MovieDetails.tsx";
-import Spinner from "../Spinner/Spinner.tsx";
-import styles from "./SearchResults.module.css";
+import Spinner from "../../components/Spinner/Spinner.tsx";
+import MovieList from "../../components/MovieList/MovieList.tsx";
+import MovieDetails from "../../components/MovieDetails/MovieDetails.tsx";
 
 const SearchResults = () => {
   const [searchParams] = useSearchParams();
@@ -96,22 +95,20 @@ const SearchResults = () => {
   }
 
   if (error) {
-    return <div className={styles.error}>{error}</div>;
+    return <div className="error pageContainer">{error}</div>;
   }
 
   return (
-    <div className={styles.searchResults}>
-      <div className={styles.searchHeader}>
+    <div className="pageContainer">
+      <div>
         <h2>{query ? `Search Results for "${query}"` : "Search Movies"}</h2>
         {!query && (
-          <p className={styles.searchPrompt}>
-            Enter a search term in the search bar above to find movies
-          </p>
+          <p>Enter a search term in the search bar above to find movies</p>
         )}
       </div>
 
       {query && movies.length === 0 ? (
-        <div className={styles.noResults}>
+        <div className="emptyState">
           <i className="fa-solid fa-file-circle-exclamation" />
           <p>No movies found for "{query}"</p>
           <p>Try a different search term</p>
