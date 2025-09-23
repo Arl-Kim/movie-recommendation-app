@@ -1,0 +1,46 @@
+.contentBlock {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  width: 100%;
+}
+
+.contentBlock.reverse {
+  flex-direction: row-reverse;
+}
+
+.textContent {
+  flex: 1;
+}
+
+.mediaContent {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.title {
+  margin-bottom: 20px;
+}
+
+.description {
+  margin-bottom: 20px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .contentBlock,
+  .contentBlock.reverse {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .textContent {
+    order: 2;
+  }
+
+  .mediaContent {
+    order: 1;
+  }
+}

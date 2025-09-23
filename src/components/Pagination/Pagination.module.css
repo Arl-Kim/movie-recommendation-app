@@ -1,0 +1,27 @@
+.pagination {
+  display: flex;
+  align-items: center;
+  align-self: center;
+  gap: 5px;
+  max-width: fit-content;
+  margin: 40px auto;
+}
+
+.paginationButton {
+  background: inherit;
+}
+
+.paginationButton:hover:not(:disabled),
+.paginationButtonActive {
+  background: var(--strong-yellow-green);
+  color: var(--dark-violet);
+}
+
+.paginationButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.paginationEllipsis {
+  padding: 8px;
+}

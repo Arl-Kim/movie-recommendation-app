@@ -1,0 +1,35 @@
+.homeContainer {
+  min-height: calc(100vh - 200px);
+}
+
+.hero {
+  background: var(--dark-violet) url("/assets/hero_background.webp") no-repeat
+    center;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 400px;
+}
+
+.heroHeading {
+  color: var(--strong-yellow-green);
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.heroHeading,
+.ctaButton {
+  animation: fadeIn 400ms ease-in-out;
+}
+
+/* ANIMATIONS */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

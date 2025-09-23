@@ -1,0 +1,27 @@
+.spinnerContainer {
+  background: inherit;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  min-height: 100vh;
+}
+
+.spinnerVideo {
+  border-radius: 5px;
+  width: 200px;
+  height: 200px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 520px) {
+  .spinnerContainer {
+    align-items: flex-start;
+    margin-top: 50px;
+  }
+
+  .spinnerVideo {
+    width: 100px;
+    height: 100px;
+  }
+}

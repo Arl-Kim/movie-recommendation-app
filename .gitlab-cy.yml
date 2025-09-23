@@ -1,0 +1,44 @@
+stages:
+  - lint
+  - test
+  - deploy
+
+# Use the official Node image
+image: node:20
+
+variables:
+  # speeds up installs
+  NODE_ENV: development
+  # cache location for pnpm/npm
+  NPM_CACHE: "$CI_PROJECT_DIR/.npm"
+
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - .npm
+
+before_script:
+  - npm ci
+
+lint:
+  stage: lint
+  script:
+    - npm run lint
+
+test:
+  stage: test
+  script:
+    - npm run test:ci
+  artifacts:
+    when: always
+    reports:
+      junit: junit.xml
+    paths:
+      - coverage/
+
+deploy:
+  stage: deploy
+  script:
+    - npx vercel --prod --token $VERCEL_TOKEN --yes
+  only:
+    - main

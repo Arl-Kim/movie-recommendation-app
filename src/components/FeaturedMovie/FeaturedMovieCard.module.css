@@ -1,0 +1,78 @@
+.featuredMovieCard {
+  background: var(--strong-yellow-green);
+  border-radius: 10px;
+  overflow: hidden;
+  max-width: 220px;
+  width: 100%;
+  margin: 0 auto;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 400ms ease;
+  animation: fadeIn 400ms ease-in-out;
+}
+
+.featuredMovieCard:hover {
+  background: var(--dark-violet);
+  transform: translateY(-4px);
+  cursor: pointer;
+}
+
+.featuredMovieImage {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+}
+
+.featuredMovieInfo {
+  padding: 10px;
+}
+
+.featuredMovieTitle {
+  transition: all 400ms ease-in-out;
+}
+
+.purpleTitle {
+  color: var(--dark-violet);
+}
+
+.featuredMovieCard:hover .featuredMovieTitle {
+  color: var(--strong-yellow-green);
+}
+
+.featuredMovieCard:hover .purpleTitle {
+  color: var(--strong-yellow-green);
+}
+
+.featuredMovieRating {
+  color: var(--moderate-violet);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.movieReleaseDate {
+  color: var(--moderate-violet);
+  font-size: 0.75em;
+  font-weight: 700;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .featuredMovieCard {
+    max-width: 180px;
+  }
+
+  .featuredMovieImage {
+    height: 240px;
+  }
+}
+
+/* ANIMATIONS */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+

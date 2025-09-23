@@ -1,0 +1,24 @@
+.featuredMovieContainer {
+  position: relative;
+  max-width: 220px;
+  margin: 0 auto;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.error {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #ff0000;
+}
+
+/* RESPONSIVE */
+@media (min-width: 768px) {
+  .featuredMovieContainer {
+    max-width: 80%;
+  }
+}
