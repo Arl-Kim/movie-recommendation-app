@@ -6,7 +6,6 @@ import { tmdbApiService } from "../../services/tmdbApiClient.ts";
 import Spinner from "../../components/Spinner/Spinner.tsx";
 import MovieList from "../../components/MovieList/MovieList.tsx";
 import MovieDetails from "../../components/MovieDetails/MovieDetails.tsx";
-import styles from "./Watchlist.module.css";
 
 const Watchlist = () => {
   const { state } = useAppContext();
@@ -59,16 +58,12 @@ const Watchlist = () => {
   }
 
   if (error) {
-    return (
-      <div className={`${styles.error} ${styles.watchlistContainer}`}>
-        {error}
-      </div>
-    );
+    return <div className="error pageContainer">{error}</div>;
   }
 
   return (
-    <div className={styles.watchlistContainer}>
-      <div className={styles.watchListHeader}>
+    <div className="pageContainer">
+      <div>
         <h2>Your Watchlist</h2>
         <p>
           You have {movies.length} movie{movies.length > 1 && "s"} in your
@@ -77,7 +72,7 @@ const Watchlist = () => {
       </div>
 
       {movies.length === 0 ? (
-        <div className={styles.emptyState}>
+        <div className="emptyState">
           <i className="fa-solid fa-bookmark"></i>
           <h2>Your watchlist is empty</h2>
           <p>

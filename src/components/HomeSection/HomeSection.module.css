@@ -17,8 +17,4 @@
     gap: 20px;
     text-align: center;
   }
-
-  .sectionContent.reverse {
-    flex-direction: column;
-  }
 }

@@ -19,6 +19,7 @@
   max-width: 400px;
   width: 100%;
   position: relative;
+  align-self: center;
   max-height: 90vh;
   overflow-y: auto;
 }

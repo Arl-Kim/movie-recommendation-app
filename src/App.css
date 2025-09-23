@@ -21,6 +21,40 @@ body {
   overflow-x: hidden;
 }
 
+.pageContainer {
+  padding: 20px;
+  min-height: calc(100vh - 200px);
+  animation: fadeIn 400ms ease-in-out;
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.emptyState i {
+  font-size: 4em;
+}
+
+.error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ff0000;
+  text-align: center;
+}
+
+.errorGroup {
+  flex-direction: column;
+}
+
+.error i {
+  font-size: 3em;
+}
+
 h1,
 h2,
 h3,
@@ -105,6 +139,12 @@ button:focus-visible {
     font-size: 87.5%;
   }
 
+  .error {
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-top: 70px;
+  }
+
   h1 {
     font-size: 2em;
   }
@@ -151,5 +191,22 @@ button:focus-visible {
 
   h6 {
     font-size: 0.6875em;
+  }
+}
+
+/* Screen Max-Width 462px */
+@media (max-width: 462px) {
+  .pageContainer {
+    padding: 10px;
+  }
+}
+
+/* ANIMATIONS */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
