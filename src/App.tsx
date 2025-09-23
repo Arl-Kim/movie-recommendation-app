@@ -12,6 +12,7 @@ import SearchResults from "./components/SearchResults/SearchResults.tsx";
 import Favorites from "./pages/Favorites/Favorites.tsx";
 import Watchlist from "./pages/Watchlist/Watchlist.tsx";
 import Footer from "./components/Footer/Footer.tsx";
+import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute.tsx";
 
 const AppContent = () => {
   const { checkAuth, loadUserPersonalization } = useAppActions();
@@ -34,15 +35,54 @@ const AppContent = () => {
       <Header />
       <Routes>
         <Route index element={<Home />} />
-        <Route path="/recommendations" element={<Recommendations />} />
+        <Route
+          path="/recommendations"
+          element={
+            <ProtectedRoute>
+              <Recommendations />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/personalized-recommendations"
-          element={<PersonalizedRecommendations />}
+          element={
+            <ProtectedRoute>
+              <PersonalizedRecommendations />
+            </ProtectedRoute>
+          }
         />
-        <Route path="/news" element={<News />} />
-        <Route path="/search" element={<SearchResults />} />
-        <Route path="/favorites" element={<Favorites />} />
-        <Route path="/watchlist" element={<Watchlist />} />
+        <Route
+          path="/news"
+          element={
+            <ProtectedRoute>
+              <News />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/search"
+          element={
+            <ProtectedRoute>
+              <SearchResults />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/favorites"
+          element={
+            <ProtectedRoute>
+              <Favorites />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/watchlist"
+          element={
+            <ProtectedRoute>
+              <Watchlist />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
       <Footer />
     </Router>
