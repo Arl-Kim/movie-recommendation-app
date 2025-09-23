@@ -14,7 +14,17 @@ const mockUsers: User[] = [
     name: "Demo User",
     favorites: [238, 550, 680], // Some popular movie IDs
     watchlist: [450, 300, 227],
-    preferences: {},
+    preferences: {
+      favoriteGenres: [],
+      dislikedGenres: [],
+      preferredReleaseDecades: [],
+      minRating: 6,
+      likedKeywords: [],
+      favoriteDirectors: [],
+      favoriteActors: [],
+    },
+    interactions: [],
+    searchHistory: [],
   },
 ];
 
@@ -115,7 +125,17 @@ export const authService = {
       name: data.name,
       favorites: [],
       watchlist: [],
-      preferences: {},
+      preferences: {
+        favoriteGenres: [],
+        dislikedGenres: [],
+        preferredReleaseDecades: [],
+        minRating: 6,
+        likedKeywords: [],
+        favoriteDirectors: [],
+        favoriteActors: [],
+      },
+      interactions: [],
+      searchHistory: [],
     };
 
     const token = "mock-jwt-token-" + Date.now();
