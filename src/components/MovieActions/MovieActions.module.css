@@ -27,3 +27,11 @@
   color: var(--moderate-violet);
   border-color: var(--moderate-violet);
 }
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .actionButton.active:hover {
+    background: var(--moderate-violet);
+    color: var(--strong-yellow-green);
+  }
+}
