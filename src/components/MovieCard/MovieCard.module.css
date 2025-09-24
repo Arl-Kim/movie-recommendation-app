@@ -61,6 +61,17 @@
 }
 
 /* RESPONSIVE */
+@media (max-width: 768px) {
+  .movieCard:hover {
+    background: var(--strong-yellow-green);
+  }
+
+  .movieCard:hover .movieTitle,
+  .movieCard:hover .movieReleaseDate {
+    color: var(--dark-violet);
+  }
+}
+
 @media (max-width: 520px) {
   .movieImage {
     max-width: 100%;

@@ -13,6 +13,7 @@ import News from "./pages/News/News.tsx";
 import SearchResults from "./pages/SearchResults/SearchResults.tsx";
 import Favorites from "./pages/Favorites/Favorites.tsx";
 import Watchlist from "./pages/Watchlist/Watchlist.tsx";
+import ToTopButton from "./components/ToTopButton/ToTopButton.tsx";
 import Footer from "./components/Footer/Footer.tsx";
 
 const AppContent = () => {
@@ -85,6 +86,7 @@ const AppContent = () => {
           }
         />
       </Routes>
+      <ToTopButton />
       <Footer />
     </Router>
   );
